@@ -19,9 +19,9 @@ void	display_map(t_data *data)
 		x = 0;
 		while (x < 800)
 		{
-			color = data->map.floor;
+			color = (data->map.floor[0] << 16) | (data->map.floor[1] << 8) | data->map.floor[2];
 			if (y < 300)
-				color = data->map.ceiling;
+				color = (data->map.ceiling[0] << 16) | (data->map.ceiling[1] << 8) | data->map.ceiling[2];
 			*(int *)(addr + (y * size_line + x * (bpp / 8))) = color;
 			x++;
 		}
@@ -34,16 +34,25 @@ void	display_map(t_data *data)
 int	parse_color(int *dst, char *str)
 {
 	char	**rgb;
+	int		i;
 
 	rgb = ft_split(str, ',');
-	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2])
+	if (!rgb)
 		return (0);
-	dst[0] = ft_atoi(rgb[0]);
-	dst[1] = ft_atoi(rgb[1]);
-	dst[2] = ft_atoi(rgb[2]);
-	free(rgb[0]);
-	free(rgb[1]);
-	free(rgb[2]);
+	i = 0;
+	while (i < 3)
+	{
+		if (!rgb[i])
+		{
+			while (i-- > 0)
+				free(rgb[i]);
+			free(rgb);
+			return (0);
+		}
+		dst[i] = ft_atoi(rgb[i]);
+		free(rgb[i]);
+		i++;
+	}
 	free(rgb);
 	return (1);
 }
@@ -77,6 +86,7 @@ int	load_map(char *file, t_map *map)
 	char	*tmp;
 	char	*full_map;
 	char	**lines;
+	int		i;
 
 	fd = open(file, O_RDONLY);
 	if (fd < 0)
@@ -99,6 +109,16 @@ int	load_map(char *file, t_map *map)
 	if (!lines)
 		return (0);
 	if (!parse_map(map, lines))
+	{
+		i = 0;
+		while (lines[i])
+			free(lines[i++]);
+		free(lines);
 		return (0);
+	}
+	i = 0;
+	while (lines[i])
+		free(lines[i++]);
+	free(lines);
 	return (1);
 }
