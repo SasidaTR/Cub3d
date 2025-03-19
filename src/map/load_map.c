@@ -1,114 +1,41 @@
-#include "../../include/cub3d.h"
+#include "../include/cub3d.h"
 
-int	validate_and_store_rgb(int *dst, char **rgb)
+int	parse_color(int color[3], char *line)
 {
-	int	i;
-
-	i = 0;
-	while (i < 3)
-	{
-		if (!rgb[i])
-			return (0);
-		dst[i] = ft_atoi(rgb[i]);
-		free(rgb[i]);
-		i++;
-	}
-	free(rgb);
+	char	**rgb = ft_split(line, ',');
+	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2])
+		return (0);
+	color[0] = ft_atoi(rgb[0]);
+	color[1] = ft_atoi(rgb[1]);
+	color[2] = ft_atoi(rgb[2]);
+	free_array(rgb);
 	return (1);
 }
 
-int	parse_color(int *dst, char *str)
+void	init_player(t_map *map, int y, int x, char dir)
 {
-	char	**rgb;
-
-	rgb = ft_split(str, ',');
-	if (!rgb)
-		return (0);
-	if (!validate_and_store_rgb(dst, rgb))
-	{
-		free(rgb);
-		return (0);
-	}
-	return (1);
-}
-
-int	parse_textures(t_map *map, char *line)
-{
-	if (!ft_strncmp(line, "N ", 2))
-		map->N = ft_strdup(line + 2);
-	else if (!ft_strncmp(line, "S ", 2))
-		map->S = ft_strdup(line + 2);
-	else if (!ft_strncmp(line, "W ", 2))
-		map->W = ft_strdup(line + 2);
-	else if (!ft_strncmp(line, "E ", 2))
-		map->E = ft_strdup(line + 2);
-	else
-		return (0);
-	return (1);
-}
-
-void	init_camera(t_map *map)
-{
-	if (map->player_dir == 'N')
-	{
-		map->dir_x = 0;
-		map->dir_y = -1;
-		map->plane_x = 0.66;
-		map->plane_y = 0;
-	}
-	else if (map->player_dir == 'S')
-	{
-		map->dir_x = 0;
-		map->dir_y = 1;
-		map->plane_x = -0.66;
-		map->plane_y = 0;
-	}
-	else if (map->player_dir == 'E')
-	{
-		map->dir_x = 1;
-		map->dir_y = 0;
-		map->plane_x = 0;
-		map->plane_y = 0.66;
-	}
-	else if (map->player_dir == 'W')
-	{
-		map->dir_x = -1;
-		map->dir_y = 0;
-		map->plane_x = 0;
-		map->plane_y = -0.66;
-	}
-}
-
-void	find_player(t_map *map, int y, int x, char dir)
-{
-	map->player_x = x;
-	map->player_y = y;
-	map->player_dir = dir;
-	init_camera(map);
+	map->player_x = x + 0.5;
+	map->player_y = y + 0.5;
+	map->dir_x = (dir == 'E') - (dir == 'W');
+	map->dir_y = (dir == 'S') - (dir == 'N');
+	map->plane_x = (dir == 'N' || dir == 'S') ? 0.66 * ((dir == 'N') - (dir == 'S')) : 0;
+	map->plane_y = (dir == 'E' || dir == 'W') ? 0.66 * ((dir == 'E') - (dir == 'W')) : 0;
 }
 
 int	parse_map_data(t_map *map, char **lines, int i)
 {
+	int	y = 0;
 	int	x;
-	int	y;
 
-	y = 0;
 	map->map = ft_calloc(ft_array_size(lines + i) + 1, sizeof(char *));
-	if (!map->map)
-		return (0);
 	while (lines[i])
 	{
 		map->map[y] = ft_strdup(lines[i]);
-		if (!map->map[y])
-		{
-			free_array(map->map);
-			return (0);
-		}
 		x = 0;
 		while (map->map[y][x])
 		{
-			if (ft_strchr("NSWE", map->map[y][x]) && map->player_x == -1)
-				find_player(map, y, x, map->map[y][x]);
+			if (ft_strchr("NSWE", map->map[y][x]))
+				init_player(map, y, x, map->map[y][x]);
 			x++;
 		}
 		y++;
@@ -117,78 +44,38 @@ int	parse_map_data(t_map *map, char **lines, int i)
 	return (1);
 }
 
-int	parse_map(t_map *map, char **lines)
+int	load_map(char *path, t_map *map)
 {
-	int	i;
-
-	i = 0;
-	while (lines[i] && !ft_isdigit(lines[i][0]))
-	{
-		if (lines[i][0] == 'C' && lines[i][1] == ' ')
-		{
-			if (!parse_color(map->ceiling, lines[i] + 2))
-				return (0);
-		}
-		else if (lines[i][0] == 'F' && lines[i][1] == ' ')
-		{
-			if (!parse_color(map->floor, lines[i] + 2))
-				return (0);
-		}
-		else if (!parse_textures(map, lines[i]))
-			return (0);
-		i++;
-	}
-	if (!lines[i] || !parse_map_data(map, lines, i))
-		return (0);
-	return (1);
-}
-
-char	*read_full_map(int fd)
-{
+	int		fd = open(path, O_RDONLY);
 	char	*line;
-	char	*tmp;
-	char	*full_map;
 
-	full_map = ft_strdup("");
-	if (!full_map)
-		return (NULL);
-	line = get_next_line(fd);
-	while (line)
-	{
-		tmp = full_map;
-		full_map = ft_strjoin(full_map, line);
-		free(line);
-		if (!full_map)
-		{
-			free(tmp);
-			return (NULL);
-		}
-		free(tmp);
-		line = get_next_line(fd);
-	}
-	return (full_map);
-}
-
-int	load_map(char *file, t_map *map)
-{
-	int		fd;
-	char	*full_map;
-	char	**lines;
-
-	fd = open(file, O_RDONLY);
 	if (fd < 0)
 		return (0);
-	full_map = read_full_map(fd);
-	close(fd);
-	if (!full_map)
-		return (0);
-	lines = ft_split(full_map, '\n');
-	free(full_map);
-	if (!lines || !parse_map(map, lines))
+	while ((line = get_next_line(fd)))
 	{
-		free_array(lines);
-		return (0);
+		if (!ft_strncmp(line, "N ", 2))
+			map->N = ft_strtrim(line + 2, " \n");
+		else if (!ft_strncmp(line, "S ", 2))
+			map->S = ft_strtrim(line + 2, " \n");
+		else if (!ft_strncmp(line, "W ", 2))
+			map->W = ft_strtrim(line + 2, " \n");
+		else if (!ft_strncmp(line, "E ", 2))
+			map->E = ft_strtrim(line + 2, " \n");
+		else if (!ft_strncmp(line, "F ", 2))
+			parse_color(map->floor, line + 2);
+		else if (!ft_strncmp(line, "C ", 2))
+			parse_color(map->ceiling, line + 2);
+		else if (ft_isdigit(line[0]) || ft_strchr(line, '1'))
+			break ;
+		free(line);
 	}
-	free_array(lines);
-	return (1);
+	char	**map_lines = ft_calloc(100, sizeof(char *));
+	int		j = 0;
+	while (line)
+	{
+		map_lines[j++] = line;
+		line = get_next_line(fd);
+	}
+	close(fd);
+	return (parse_map_data(map, map_lines, 0));
 }

@@ -13,24 +13,23 @@
 
 typedef struct s_map
 {
+	char	**map;
 	char	*N;
 	char	*S;
 	char	*W;
 	char	*E;
-	void	*tex_n;
-	void	*tex_s;
-	void	*tex_w;
-	void	*tex_e;
-	int		ceiling[3];
 	int		floor[3];
-	char	**map;
-	int		player_x;
-	int		player_y;
-	char	player_dir;
+	int		ceiling[3];
+	double	player_x;
+	double	player_y;
 	double	dir_x;
 	double	dir_y;
 	double	plane_x;
 	double	plane_y;
+	void	*tex_n;
+	void	*tex_s;
+	void	*tex_w;
+	void	*tex_e;
 }	t_map;
 
 typedef struct s_data
