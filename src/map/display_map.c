@@ -9,54 +9,62 @@ int	get_tex_pixel(void *tex, int x, int y)
 
 void	display_map(t_data *data)
 {
-	int	x, y, tex_x, tex_y;
-	double cam_x, ray_x, ray_y, delta_x, delta_y, dist;
-	double side_x, side_y, step, tex_pos, wall_x;
-	int	map_x, map_y, step_x, step_y, side, lh, ds, de;
-	void *img = mlx_new_image(data->mlx, 800, 600);
-	char *addr = mlx_get_data_addr(img, &(int){32}, &(int){3200}, &(int){0});
+	int		x, y;
+	void	*img;
+	char	*addr;
+	int		bpp, sl, endian;
 
-	for (x = 0; x < 800; x++)
+	img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	addr = mlx_get_data_addr(img, &bpp, &sl, &endian);
+	for (x = 0; x < WIDTH; x++)
 	{
-		cam_x = 2 * x / 800.0 - 1;
-		ray_x = data->map.dir_x + data->map.plane_x * cam_x;
-		ray_y = data->map.dir_y + data->map.plane_y * cam_x;
-		map_x = data->map.player_x;
-		map_y = data->map.player_y;
-		delta_x = fabs(1 / ray_x);
-		delta_y = fabs(1 / ray_y);
-		step_x = ray_x < 0 ? -1 : 1;
-		step_y = ray_y < 0 ? -1 : 1;
-		side_x = ray_x < 0 ? (data->map.player_x - map_x) * delta_x : (map_x + 1.0 - data->map.player_x) * delta_x;
-		side_y = ray_y < 0 ? (data->map.player_y - map_y) * delta_y : (map_y + 1.0 - data->map.player_y) * delta_y;
+		double cam_x = 2 * x / (double)WIDTH - 1;
+		double ray_x = data->map.dir_x + data->map.plane_x * cam_x;
+		double ray_y = data->map.dir_y + data->map.plane_y * cam_x;
+		int map_x = (int)data->map.player_x;
+		int map_y = (int)data->map.player_y;
+		double delta_x = fabs(1 / ray_x);
+		double delta_y = fabs(1 / ray_y);
+		int step_x = ray_x < 0 ? -1 : 1;
+		int step_y = ray_y < 0 ? -1 : 1;
+		double side_x = ray_x < 0 ? (data->map.player_x - map_x) * delta_x : (map_x + 1.0 - data->map.player_x) * delta_x;
+		double side_y = ray_y < 0 ? (data->map.player_y - map_y) * delta_y : (map_y + 1.0 - data->map.player_y) * delta_y;
+		int side;
 		while (data->map.map[map_y][map_x] != '1')
 		{
-			if (side_x < side_y && !(side = 0))
-				side_x += delta_x, map_x += step_x;
+			if (side_x < side_y)
+				side_x += delta_x, map_x += step_x, side = 0;
 			else
 				side_y += delta_y, map_y += step_y, side = 1;
 		}
-		dist = side ? (side_y - delta_y) : (side_x - delta_x);
-		lh = (int)(600 / dist);
-		ds = -lh / 2 + 300;
-		de = lh / 2 + 300;
-		wall_x = side ? data->map.player_x + dist * ray_x : data->map.player_y + dist * ray_y;
+		double dist = side ? (side_y - delta_y) : (side_x - delta_x);
+		int line_height = (int)(HEIGHT / dist);
+		int draw_start = -line_height / 2 + HEIGHT / 2;
+		int draw_end = line_height / 2 + HEIGHT / 2;
+		draw_start = draw_start < 0 ? 0 : draw_start;
+		draw_end = draw_end >= HEIGHT ? HEIGHT - 1 : draw_end;
+
+		double wall_x = side ? data->map.player_x + dist * ray_x : data->map.player_y + dist * ray_y;
 		wall_x -= floor(wall_x);
-		tex_x = (int)(wall_x * 64);
+		int tex_x = (int)(wall_x * TEX_SIZE);
 		if ((side == 0 && ray_x > 0) || (side == 1 && ray_y < 0))
-			tex_x = 63 - tex_x;
-		step = 64.0 / lh;
-		tex_pos = (ds - 300 + lh / 2) * step;
+			tex_x = TEX_SIZE - tex_x - 1;
+
+		double step = 1.0 * TEX_SIZE / line_height;
+		double tex_pos = (draw_start - HEIGHT / 2 + line_height / 2) * step;
 		void *tex = side ? (ray_y < 0 ? data->map.tex_n : data->map.tex_s)
 						 : (ray_x < 0 ? data->map.tex_w : data->map.tex_e);
-		y = ds < 0 ? 0 : ds;
-		de = de >= 600 ? 599 : de;
-		while (y < de)
+		for (y = 0; y < draw_start; y++)
+			*(int *)(addr + y * sl + x * (bpp / 8)) = (data->map.ceiling[0] << 16 | data->map.ceiling[1] << 8 | data->map.ceiling[2]);
+		for (y = draw_end; y < HEIGHT; y++)
+			*(int *)(addr + y * sl + x * (bpp / 8)) = (data->map.floor[0] << 16 | data->map.floor[1] << 8 | data->map.floor[2]);
+
+		for (y = draw_start; y < draw_end; y++)
 		{
-			tex_y = (int)tex_pos & 63;
+			int tex_y = (int)tex_pos & (TEX_SIZE - 1);
 			tex_pos += step;
-			*(int *)(addr + (y * 3200 + x * 4)) = get_tex_pixel(tex, tex_x, tex_y);
-			y++;
+			int color = get_tex_pixel(tex, tex_x, tex_y);
+			*(int *)(addr + y * sl + x * (bpp / 8)) = color;
 		}
 	}
 	mlx_put_image_to_window(data->mlx, data->win, img, 0, 0);

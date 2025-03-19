@@ -46,11 +46,17 @@ int	parse_map_data(t_map *map, char **lines, int i)
 
 int	load_map(char *path, t_map *map)
 {
-	int		fd = open(path, O_RDONLY);
+	int		fd;
 	char	*line;
+	char	**map_lines;
+	int		size;
+	int		i;
 
+	fd = open(path, O_RDONLY);
 	if (fd < 0)
 		return (0);
+	map_lines = NULL;
+	size = 0;
 	while ((line = get_next_line(fd)))
 	{
 		if (!ft_strncmp(line, "N ", 2))
@@ -62,20 +68,34 @@ int	load_map(char *path, t_map *map)
 		else if (!ft_strncmp(line, "E ", 2))
 			map->E = ft_strtrim(line + 2, " \n");
 		else if (!ft_strncmp(line, "F ", 2))
-			parse_color(map->floor, line + 2);
+		{
+			if (!parse_color(map->floor, line + 2))
+				return (free(line), 0);
+		}
 		else if (!ft_strncmp(line, "C ", 2))
-			parse_color(map->ceiling, line + 2);
+		{
+			if (!parse_color(map->ceiling, line + 2))
+				return (free(line), 0);
+		}
 		else if (ft_isdigit(line[0]) || ft_strchr(line, '1'))
+		{
+			map_lines = ft_calloc(2, sizeof(char *));
+			map_lines[0] = line;
+			size = 1;
 			break ;
+		}
 		free(line);
 	}
-	char	**map_lines = ft_calloc(100, sizeof(char *));
-	int		j = 0;
-	while (line)
+	if (!map_lines)
+		return (close(fd), 0);
+	while ((line = get_next_line(fd)))
 	{
-		map_lines[j++] = line;
-		line = get_next_line(fd);
+		map_lines = ft_realloc(map_lines, size * sizeof(char *), (size + 2) * sizeof(char *));
+		map_lines[size++] = line;
+		map_lines[size] = NULL;
 	}
 	close(fd);
-	return (parse_map_data(map, map_lines, 0));
+	i = parse_map_data(map, map_lines, 0);
+	free_array(map_lines);
+	return (i);
 }
