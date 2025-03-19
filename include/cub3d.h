@@ -13,9 +13,20 @@
 
 typedef struct s_map
 {
+	char	*N;
+	char	*S;
+	char	*W;
+	char	*E;
+	void	*tex_n;
+	void	*tex_s;
+	void	*tex_w;
+	void	*tex_e;
 	int		ceiling[3];
 	int		floor[3];
 	char	**map;
+	int		player_x;
+	int		player_y;
+	char	player_dir;
 }	t_map;
 
 typedef struct s_data
@@ -25,8 +36,10 @@ typedef struct s_data
 	t_map	map;
 }	t_data;
 
-// init
+// map
 int		load_map(char *file, t_map *map);
+void	display_map(t_data *data);
+int	load_textures(t_data *data);
 
 // input
 int		handle_key(int keycode, t_data *data);
@@ -35,7 +48,6 @@ int		handle_key(int keycode, t_data *data);
 
 //utils
 int		close_window(t_data *data);
-
-void	display_map(t_data *data);
+void	free_array(char **array);
 
 #endif

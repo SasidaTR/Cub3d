@@ -16,6 +16,11 @@ int	main(int argc, char **argv)
 		printf("Error\nFailed to load map\n");
 		return (1);
 	}
+	if (!load_textures(&data))
+	{
+		printf("Error\nFailed to load textures\n");
+		return (1);
+	}
 	display_map(&data);
 	mlx_hook(data.win, 2, 1L << 0, handle_key, &data);
 	mlx_hook(data.win, 17, 0, close_window, &data);

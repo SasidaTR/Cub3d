@@ -1,7 +1,7 @@
-N ./path_to_the_north_texture
-S ./path_to_the_south_texture
-W ./path_to_the_west_texture
-E ./path_to_the_east_texture
+N ./textures/bookshelf.xpm
+S ./textures/cobblestone.xpm
+W ./textures/cyan_concrete.xpm
+E ./textures/mycelium_top.xpm
 
 C 0,0,0
 F 255,255,255
