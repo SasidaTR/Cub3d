@@ -27,6 +27,10 @@ typedef struct s_map
 	int		player_x;
 	int		player_y;
 	char	player_dir;
+	double	dir_x;
+	double	dir_y;
+	double	plane_x;
+	double	plane_y;
 }	t_map;
 
 typedef struct s_data
@@ -36,15 +40,15 @@ typedef struct s_data
 	t_map	map;
 }	t_data;
 
-// map
-int		load_map(char *file, t_map *map);
-void	display_map(t_data *data);
-int	load_textures(t_data *data);
-
 // input
 int		handle_key(int keycode, t_data *data);
 
-// parsing
+// map
+int		load_map(char *file, t_map *map);
+void	display_map(t_data *data);
+
+// textures
+int	load_textures(t_data *data);
 
 //utils
 int		close_window(t_data *data);
