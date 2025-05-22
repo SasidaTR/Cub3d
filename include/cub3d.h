@@ -11,7 +11,7 @@
 
 # define WIDTH 800
 # define HEIGHT 600
-# define TEX_SIZE 64
+# define TEX_SIZE 1024
 
 # define KEY_ESC 65307
 
