@@ -41,10 +41,14 @@ typedef struct s_data
 	void	*mlx;
 	void	*win;
 	t_map	map;
+	int		keys[65536];
 }	t_data;
 
 // input
 int		handle_key(int keycode, t_data *data);
+int		key_press(int keycode, t_data *data);
+int		key_release(int keycode, t_data *data);
+void	update_player(t_data *data);
 
 // map
 int		load_map(char *file, t_map *map);

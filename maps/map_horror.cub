@@ -1,0 +1,15 @@
+N ./textures/horror_wall_1.xpm
+S ./textures/horror_wall_2.xpm
+W ./textures/horror_wall_3.xpm
+E ./textures/horror_wall_4.xpm
+
+C 190,170,130
+F 80,0,30
+
+1111111
+1001001
+1100011
+100S001
+1100011
+1001001
+1111111
