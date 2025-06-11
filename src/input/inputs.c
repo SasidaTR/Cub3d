@@ -1,15 +1,5 @@
 #include "../../include/cub3d.h"
 
-#define KEY_W 119
-#define KEY_A 97
-#define KEY_S 115
-#define KEY_D 100
-#define KEY_LEFT 65361
-#define KEY_RIGHT 65363
-#define KEY_ESC 65307
-#define MOVE_SPEED 0.005
-#define ROT_SPEED 0.005
-
 int	key_press(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
@@ -24,69 +14,82 @@ int	key_release(int keycode, t_data *data)
 	return (0);
 }
 
-void	update_player(t_data *data)
+static void	move_ws(t_data *d, double x, double y)
 {
 	double	new_x;
 	double	new_y;
+
+	if (d->keys[KEY_W])
+	{
+		new_x = x + d->map.dir_x * MOVE_SPEED;
+		new_y = y + d->map.dir_y * MOVE_SPEED;
+		if (d->map.map[(int)y][(int)new_x] != '1')
+			d->map.player_x = new_x;
+		if (d->map.map[(int)new_y][(int)x] != '1')
+			d->map.player_y = new_y;
+	}
+	if (d->keys[KEY_S])
+	{
+		new_x = x - d->map.dir_x * MOVE_SPEED;
+		new_y = y - d->map.dir_y * MOVE_SPEED;
+		if (d->map.map[(int)y][(int)new_x] != '1')
+			d->map.player_x = new_x;
+		if (d->map.map[(int)new_y][(int)x] != '1')
+			d->map.player_y = new_y;
+	}
+}
+
+static void	move_ad(t_data *d, double x, double y)
+{
+	double	new_x;
+	double	new_y;
+
+	if (d->keys[KEY_A])
+	{
+		new_x = x - d->map.plane_x * MOVE_SPEED;
+		new_y = y - d->map.plane_y * MOVE_SPEED;
+		if (d->map.map[(int)y][(int)new_x] != '1')
+			d->map.player_x = new_x;
+		if (d->map.map[(int)new_y][(int)x] != '1')
+			d->map.player_y = new_y;
+	}
+	if (d->keys[KEY_D])
+	{
+		new_x = x + d->map.plane_x * MOVE_SPEED;
+		new_y = y + d->map.plane_y * MOVE_SPEED;
+		if (d->map.map[(int)y][(int)new_x] != '1')
+			d->map.player_x = new_x;
+		if (d->map.map[(int)new_y][(int)x] != '1')
+			d->map.player_y = new_y;
+	}
+}
+
+static void	rotate_cam(t_data *d, double rot)
+{
 	double	old_dir_x;
 	double	old_plane_x;
-	double	cur_x = data->map.player_x;
-	double	cur_y = data->map.player_y;
 
-	if (data->keys[KEY_W])
-	{
-		new_x = cur_x + data->map.dir_x * MOVE_SPEED;
-		new_y = cur_y + data->map.dir_y * MOVE_SPEED;
-		if (data->map.map[(int)cur_y][(int)new_x] != '1')
-			data->map.player_x = new_x;
-		if (data->map.map[(int)new_y][(int)cur_x] != '1')
-			data->map.player_y = new_y;
-	}
-	if (data->keys[KEY_S])
-	{
-		new_x = cur_x - data->map.dir_x * MOVE_SPEED;
-		new_y = cur_y - data->map.dir_y * MOVE_SPEED;
-		if (data->map.map[(int)cur_y][(int)new_x] != '1')
-			data->map.player_x = new_x;
-		if (data->map.map[(int)new_y][(int)cur_x] != '1')
-			data->map.player_y = new_y;
-	}
-	if (data->keys[KEY_A])
-	{
-		new_x = cur_x - data->map.plane_x * MOVE_SPEED;
-		new_y = cur_y - data->map.plane_y * MOVE_SPEED;
-		if (data->map.map[(int)cur_y][(int)new_x] != '1')
-			data->map.player_x = new_x;
-		if (data->map.map[(int)new_y][(int)cur_x] != '1')
-			data->map.player_y = new_y;
-	}
-	if (data->keys[KEY_D])
-	{
-		new_x = cur_x + data->map.plane_x * MOVE_SPEED;
-		new_y = cur_y + data->map.plane_y * MOVE_SPEED;
-		if (data->map.map[(int)cur_y][(int)new_x] != '1')
-			data->map.player_x = new_x;
-		if (data->map.map[(int)new_y][(int)cur_x] != '1')
-			data->map.player_y = new_y;
-	}
+	old_dir_x = d->map.dir_x;
+	d->map.dir_x = d->map.dir_x * cos(rot) - d->map.dir_y * sin(rot);
+	d->map.dir_y = old_dir_x * sin(rot) + d->map.dir_y * cos(rot);
+	old_plane_x = d->map.plane_x;
+	d->map.plane_x = d->map.plane_x * cos(rot) - d->map.plane_y * sin(rot);
+	d->map.plane_y = old_plane_x * sin(rot) + d->map.plane_y * cos(rot);
+}
+
+void	update_player(t_data *data)
+{
+	double	cur_x;
+	double	cur_y;
+
+	cur_x = data->map.player_x;
+	cur_y = data->map.player_y;
+	move_ws(data, cur_x, cur_y);
+	move_ad(data, cur_x, cur_y);
 	if (data->keys[KEY_LEFT])
-	{
-		old_dir_x = data->map.dir_x;
-		data->map.dir_x = data->map.dir_x * cos(-ROT_SPEED) - data->map.dir_y * sin(-ROT_SPEED);
-		data->map.dir_y = old_dir_x * sin(-ROT_SPEED) + data->map.dir_y * cos(-ROT_SPEED);
-		old_plane_x = data->map.plane_x;
-		data->map.plane_x = data->map.plane_x * cos(-ROT_SPEED) - data->map.plane_y * sin(-ROT_SPEED);
-		data->map.plane_y = old_plane_x * sin(-ROT_SPEED) + data->map.plane_y * cos(-ROT_SPEED);
-	}
+		rotate_cam(data, -ROT_SPEED);
 	if (data->keys[KEY_RIGHT])
-	{
-		old_dir_x = data->map.dir_x;
-		data->map.dir_x = data->map.dir_x * cos(ROT_SPEED) - data->map.dir_y * sin(ROT_SPEED);
-		data->map.dir_y = old_dir_x * sin(ROT_SPEED) + data->map.dir_y * cos(ROT_SPEED);
-		old_plane_x = data->map.plane_x;
-		data->map.plane_x = data->map.plane_x * cos(ROT_SPEED) - data->map.plane_y * sin(ROT_SPEED);
-		data->map.plane_y = old_plane_x * sin(ROT_SPEED) + data->map.plane_y * cos(ROT_SPEED);
-	}
+		rotate_cam(data, ROT_SPEED);
 }
 
 int	close_window(t_data *data)
