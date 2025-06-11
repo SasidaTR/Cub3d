@@ -17,13 +17,10 @@ int	main(int argc, char **argv)
 		return (1);
 	}
 	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, 800, 600, "Cub3D");
+	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3D");
 	ft_bzero(data.keys, sizeof(int) * 65536);
-	if (load_map(argv[1], &data.map) == 0)
-	{
-		printf("Error\nFailed to load map\n");
+	if (!load_map(argv[1], &data.map))
 		return (1);
-	}
 	if (!load_textures(&data))
 	{
 		printf("Error\nFailed to load textures\n");

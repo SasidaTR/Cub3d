@@ -82,10 +82,18 @@ int		handle_key(int keycode, t_data *data);
 int		key_press(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
 void	update_player(t_data *data);
+int		close_window(t_data *data);
 
 // map
 int		load_map(char *file, t_map *map);
 void	display_map(t_data *data);
+
+// parsing
+int		load_map(char *path, t_map *map);
+int		parse_color(int color[3], char *line);
+int		parse_map_data(t_map *map, char **lines, int i);
+void	init_player(t_map *map, int y, int x, char dir);
+int		is_map_closed(char **map);
 
 // raycasting
 int		get_tex_pixel(void *tex, int x, int y);
@@ -98,7 +106,7 @@ void	draw_wall(t_ray *r, char *addr, int x);
 int		load_textures(t_data *data);
 
 // utils
-int		close_window(t_data *data);
 void	free_array(char **array);
+int		print_error(char *msg);
 
 #endif
