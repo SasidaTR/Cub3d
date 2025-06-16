@@ -1,7 +1,7 @@
-N ./textures/debug_north.xpm
-S ./textures/debug_south.xpm
-W ./textures/debug_west.xpm
-E ./textures/debug_east.xpm
+NO ./textures/debug_north.xpm
+SO ./textures/debug_south.xpm
+WE ./textures/debug_west.xpm
+EA ./textures/debug_east.xpm
 
 C 255,255,255
 F 0,0,0

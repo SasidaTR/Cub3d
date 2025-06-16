@@ -3,30 +3,37 @@
 static int	read_map_start(int fd, t_map *map, char ***lines, int *size)
 {
 	char	*line;
+	char	*trimmed;
 
 	while ((line = get_next_line(fd)))
 	{
-		if (!ft_strncmp(line, "N ", 2))
-			map->N = ft_strtrim(line + 2, " \n");
-		else if (!ft_strncmp(line, "S ", 2))
-			map->S = ft_strtrim(line + 2, " \n");
-		else if (!ft_strncmp(line, "W ", 2))
-			map->W = ft_strtrim(line + 2, " \n");
-		else if (!ft_strncmp(line, "E ", 2))
-			map->E = ft_strtrim(line + 2, " \n");
+		if (!ft_strncmp(line, "NO ", 3))
+			map->N = ft_strtrim(line + 3, " \n");
+		else if (!ft_strncmp(line, "SO ", 3))
+			map->S = ft_strtrim(line + 3, " \n");
+		else if (!ft_strncmp(line, "WE ", 3))
+			map->W = ft_strtrim(line + 3, " \n");
+		else if (!ft_strncmp(line, "EA ", 3))
+			map->E = ft_strtrim(line + 3, " \n");
 		else if (!ft_strncmp(line, "F ", 2))
 		{
-			if (!parse_color(map->floor, line + 2))
-				return (free(line), 0);
+			trimmed = ft_strtrim(line + 2, " \n");
+			if (!parse_color(map->floor, trimmed))
+				return (free(trimmed), free(line), 0);
+			free(trimmed);
 		}
 		else if (!ft_strncmp(line, "C ", 2))
 		{
-			if (!parse_color(map->ceiling, line + 2))
-				return (free(line), 0);
+			trimmed = ft_strtrim(line + 2, " \n");
+			if (!parse_color(map->ceiling, trimmed))
+				return (free(trimmed), free(line), 0);
+			free(trimmed);
 		}
-		else if (ft_isdigit(line[0]) || ft_strchr(line, '1'))
+		else if (ft_strchr(line, '1'))
 		{
 			*lines = ft_calloc(2, sizeof(char *));
+			if (!*lines)
+				return (free(line), 0);
 			(*lines)[0] = line;
 			*size = 1;
 			return (1);
@@ -43,8 +50,7 @@ static int	read_map_lines(int fd, char ***lines, int *size)
 
 	while ((line = get_next_line(fd)))
 	{
-		tmp = ft_realloc(*lines, (*size) * sizeof(char *),
-				(*size + 2) * sizeof(char *));
+		tmp = ft_realloc(*lines, (*size) * sizeof(char *), (*size + 2) * sizeof(char *));
 		if (!tmp)
 			return (free(line), 0);
 		*lines = tmp;
