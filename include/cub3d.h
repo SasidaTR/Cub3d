@@ -108,5 +108,7 @@ int		load_textures(t_data *data);
 // utils
 void	free_array(char **array);
 int		print_error(char *msg);
+void    free_map_resources(t_map *map, void *mlx);
+void    free_all_resources(t_data *data);
 
 #endif

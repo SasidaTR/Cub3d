@@ -8,6 +8,8 @@ int	get_tex_pixel(void *tex, int x, int y)
 	char	*adr;
 
 	adr = mlx_get_data_addr(tex, &bpp, &line, &endian);
+	if (!adr)
+		return (0);
 	return (*(int *)(adr + (y * line + x * (bpp / 8))));
 }
 

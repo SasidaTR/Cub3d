@@ -9,8 +9,16 @@ static void	init_ray(t_ray *r, t_data *d, int x)
 	r->map_y = (int)d->map.player_y;
 	r->delta_x = fabs(1.0 / r->ray_x);
 	r->delta_y = fabs(1.0 / r->ray_y);
-	r->step_x = (r->ray_x < 0) ? -1 : 1;
-	r->step_y = (r->ray_y < 0) ? -1 : 1;
+	
+	if (r->ray_x < 0)
+		r->step_x = -1;
+	else
+		r->step_x = 1;
+		
+	if (r->ray_y < 0)
+		r->step_y = -1;
+	else
+		r->step_y = 1;
 	if (r->ray_x < 0)
 		r->side_x = (d->map.player_x - r->map_x) * r->delta_x;
 	else
@@ -66,9 +74,19 @@ static void	project_wall(t_ray *r, t_data *d)
 static void	select_tex(t_ray *r, t_data *d)
 {
 	if (r->side == 1)
-		r->tex = (r->ray_y < 0) ? d->map.tex_n : d->map.tex_s;
+	{
+		if (r->ray_y < 0)
+			r->tex = d->map.tex_n;
+		else
+			r->tex = d->map.tex_s;
+	}
 	else
-		r->tex = (r->ray_x < 0) ? d->map.tex_w : d->map.tex_e;
+	{
+		if (r->ray_x < 0)
+			r->tex = d->map.tex_w;
+		else
+			r->tex = d->map.tex_e;
+	}
 	r->step = 1.0 * TEX_SIZE / r->line_height;
 	r->tex_pos = (r->start - HEIGHT / 2 + r->line_height / 2) * r->step;
 }
