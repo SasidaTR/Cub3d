@@ -23,10 +23,20 @@ int	close_window(t_data *data)
 
 static void	try_move(t_data *d, double new_x, double new_y)
 {
-	if (d->map.map[(int)d->map.player_y][(int)new_x] != '1')
+	if (!check_wall_collision(d, new_x, new_y))
+	{
 		d->map.player_x = new_x;
-	if (d->map.map[(int)new_y][(int)d->map.player_x] != '1')
 		d->map.player_y = new_y;
+		return ;
+	}
+	if (!check_wall_collision(d, new_x, d->map.player_y))
+	{
+		d->map.player_x = new_x;
+	}
+	if (!check_wall_collision(d, d->map.player_x, new_y))
+	{
+		d->map.player_y = new_y;
+	}
 }
 
 static void	move_player(t_data *d)
@@ -37,13 +47,17 @@ static void	move_player(t_data *d)
 	x = d->map.player_x;
 	y = d->map.player_y;
 	if (d->keys[KEY_W])
-		try_move(d, x + d->map.dir_x * MOVE_SPEED, y + d->map.dir_y * MOVE_SPEED);
+		try_move(d, x + d->map.dir_x * MOVE_SPEED, y + d->map.dir_y
+			* MOVE_SPEED);
 	if (d->keys[KEY_S])
-		try_move(d, x - d->map.dir_x * MOVE_SPEED, y - d->map.dir_y * MOVE_SPEED);
+		try_move(d, x - d->map.dir_x * MOVE_SPEED, y - d->map.dir_y
+			* MOVE_SPEED);
 	if (d->keys[KEY_A])
-		try_move(d, x - d->map.plane_x * MOVE_SPEED, y - d->map.plane_y * MOVE_SPEED);
+		try_move(d, x - d->map.plane_x * MOVE_SPEED, y - d->map.plane_y
+			* MOVE_SPEED);
 	if (d->keys[KEY_D])
-		try_move(d, x + d->map.plane_x * MOVE_SPEED, y + d->map.plane_y * MOVE_SPEED);
+		try_move(d, x + d->map.plane_x * MOVE_SPEED, y + d->map.plane_y
+			* MOVE_SPEED);
 }
 
 static void	rotate_cam(t_data *d, double rot)

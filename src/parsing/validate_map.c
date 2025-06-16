@@ -15,9 +15,9 @@ int	is_map_closed(char **map)
 		{
 			if (map[y][x] == '0')
 			{
-				if (y == 0 || !map[y + 1] || x == 0 || !map[y][x + 1] ||
-					map[y - 1][x] == ' ' || map[y + 1][x] == ' ' ||
-					map[y][x - 1] == ' ' || map[y][x + 1] == ' ')
+				if (y == 0 || !map[y + 1] || x == 0 || !map[y][x + 1] || map[y
+					- 1][x] == ' ' || map[y + 1][x] == ' ' || map[y][x
+					- 1] == ' ' || map[y][x + 1] == ' ')
 					return (0);
 			}
 			x++;
@@ -26,4 +26,3 @@ int	is_map_closed(char **map)
 	}
 	return (1);
 }
-

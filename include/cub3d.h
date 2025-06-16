@@ -83,6 +83,7 @@ int		key_press(int keycode, t_data *data);
 int		key_release(int keycode, t_data *data);
 void	update_player(t_data *data);
 int		close_window(t_data *data);
+int		check_wall_collision(t_data *data, double new_x, double new_y);
 
 // map
 int		load_map(char *file, t_map *map);
