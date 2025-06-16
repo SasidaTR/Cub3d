@@ -1,15 +1,11 @@
-N ./textures/horror_wall_1.xpm
-S ./textures/horror_wall_2.xpm
-W ./textures/horror_wall_3.xpm
-E ./textures/horror_wall_4.xpm
+N ./textures/debug_north.xpm
+S ./textures/debug_south.xpm
+W ./textures/debug_west.xpm
+E ./textures/debug_east.xpm
 
-C 190,170,130
-F 80,0,30
+C 255,255,255
+F 0,0,0
 
-1111100
-1001001
-1100011
-100S001
-1100011
-1001001
-1111111
+1111111111111111
+1E00000000000001
+1111111111111111
