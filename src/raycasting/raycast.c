@@ -9,12 +9,10 @@ static void	init_ray(t_ray *r, t_data *d, int x)
 	r->map_y = (int)d->map.player_y;
 	r->delta_x = fabs(1.0 / r->ray_x);
 	r->delta_y = fabs(1.0 / r->ray_y);
-	
 	if (r->ray_x < 0)
 		r->step_x = -1;
 	else
 		r->step_x = 1;
-		
 	if (r->ray_y < 0)
 		r->step_y = -1;
 	else

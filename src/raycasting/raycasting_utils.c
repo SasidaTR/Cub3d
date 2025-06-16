@@ -18,9 +18,7 @@ void	draw_ceiling(t_data *d, char *addr, int x, int limit)
 	int	y;
 	int	color;
 
-	color = (d->map.ceiling[0] << 16)
-		| (d->map.ceiling[1] << 8)
-		| d->map.ceiling[2];
+	color = (d->map.ceiling[0] << 16) | (d->map.ceiling[1] << 8) | d->map.ceiling[2];
 	y = 0;
 	while (y < limit)
 	{
@@ -34,9 +32,7 @@ void	draw_floor(t_data *d, char *addr, int x, int start)
 	int	y;
 	int	color;
 
-	color = (d->map.floor[0] << 16)
-		| (d->map.floor[1] << 8)
-		| d->map.floor[2];
+	color = (d->map.floor[0] << 16) | (d->map.floor[1] << 8) | d->map.floor[2];
 	y = start;
 	while (y < HEIGHT)
 	{
@@ -63,4 +59,3 @@ void	draw_wall(t_ray *r, char *addr, int x)
 		y++;
 	}
 }
-
