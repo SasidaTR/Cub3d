@@ -12,25 +12,18 @@ int	main(int argc, char **argv)
 	t_data	data;
 
 	if (argc != 2)
-	{
-		printf("Usage: ./cub3D <map.cub>\n");
-		return (1);
-	}
-	data.mlx = mlx_init();
-	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3D");
-	ft_bzero(data.keys, sizeof(int) * 65536);
+		return (printf("Usage: ./cub3D <map.cub>\n"), 1);
+	ft_bzero(&data, sizeof(t_data));
 	if (!load_map(argv[1], &data.map))
 		return (1);
+	data.mlx = mlx_init();
+	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3D");
 	if (!load_textures(&data))
-	{
-		printf("Error\nFailed to load textures\n");
-		return (1);
-	}
-	display_map(&data);
+		return (printf("Error\nFailed to load textures\n"), 1);
 	mlx_hook(data.win, 2, 1L << 0, key_press, &data);
 	mlx_hook(data.win, 3, 1L << 1, key_release, &data);
-	mlx_loop_hook(data.mlx, main_loop, &data);
 	mlx_hook(data.win, 17, 0, close_window, &data);
+	mlx_loop_hook(data.mlx, main_loop, &data);
 	mlx_loop(data.mlx);
 	return (0);
 }
