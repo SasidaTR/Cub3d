@@ -5,8 +5,6 @@ int	is_map_closed(char **map)
 	int	y;
 	int	x;
 
-	if (!map || !map[0])
-		return (0);
 	y = 0;
 	while (map[y])
 	{
@@ -26,4 +24,3 @@ int	is_map_closed(char **map)
 	}
 	return (1);
 }
-
