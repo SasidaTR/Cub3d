@@ -65,7 +65,7 @@ static void	project_wall(t_ray *r, t_data *d)
 		r->wall_x = d->map.player_x + r->dist * r->ray_x;
 	r->wall_x -= floor(r->wall_x);
 	r->tex_x = (int)(r->wall_x * TEX_SIZE);
-	if ((r->side == 0 && r->ray_x > 0) || (r->side == 1 && r->ray_y < 0))
+	if ((r->side == 0 && r->ray_x < 0) || (r->side == 1 && r->ray_y > 0))
 		r->tex_x = TEX_SIZE - r->tex_x - 1;
 }
 

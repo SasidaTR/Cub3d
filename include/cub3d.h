@@ -1,13 +1,13 @@
 #ifndef CUB3D_H
 # define CUB3D_H
 
-# include "../libft/libft.h"
-# include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include "../libft/libft.h"
+# include "mlx.h"
 
 # define WIDTH 800
 # define HEIGHT 600
@@ -85,16 +85,13 @@ void	update_player(t_data *data);
 int		close_window(t_data *data);
 int		check_wall_collision(t_data *data, double new_x, double new_y);
 
-// map
-int		load_map(char *file, t_map *map);
-void	display_map(t_data *data);
-
 // parsing
 int		load_map(char *path, t_map *map);
 int		parse_color(int color[3], char *line);
 int		parse_map_data(t_map *map, char **lines, int i);
 void	init_player(t_map *map, int y, int x, char dir);
 int		is_map_closed(char **map);
+void	display_map(t_data *data);
 
 // raycasting
 int		get_tex_pixel(void *tex, int x, int y);
@@ -109,7 +106,7 @@ int		load_textures(t_data *data);
 // utils
 void	free_array(char **array);
 int		print_error(char *msg);
-void    free_map_resources(t_map *map, void *mlx);
-void    free_all_resources(t_data *data);
+void	free_map_resources(t_map *map, void *mlx);
+void	free_all_resources(t_data *data);
 
 #endif
