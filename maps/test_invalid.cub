@@ -1,0 +1,15 @@
+NO ./textures/debug_north.xpm
+SO ./textures/debug_south.xpm
+WE ./textures/debug_west.xpm
+EA ./textures/debug_east.xpm
+
+C 0,0,0
+F 255,255,255
+
+1111111
+100 001
+1100011
+100S001
+1100011
+1001001
+1111111
