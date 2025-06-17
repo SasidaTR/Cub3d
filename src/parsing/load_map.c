@@ -74,9 +74,16 @@ int	load_map(char *path, t_map *map)
 	size = 0;
 	if (!read_map_start(fd, map, &lines, &size))
 		return (close(fd), print_error("invalid map elements"));
+	if (!validate_textures(map))
+		return (close(fd), free_array(lines), print_error("invalid texture paths"));
 	if (!read_map_lines(fd, &lines, &size))
-		return (close(fd), free_array(lines), print_error("failed to read map lines"));
+		return (close(fd), free_array(lines),
+			print_error("failed to read map lines"));
 	close(fd);
+	if (!validate_map_empty_lines(lines))
+		return (free_array(lines), print_error("map contains invalid empty lines"));
+	if (!validate_map_chars(lines))
+		return (free_array(lines), print_error("map contains invalid characters"));
 	if (!is_map_closed(lines))
 		return (free_array(lines), print_error("map is not closed"));
 	ok = parse_map_data(map, lines, 0);
