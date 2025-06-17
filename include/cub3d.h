@@ -92,6 +92,9 @@ int		parse_map_data(t_map *map, char **lines, int i);
 void	init_player(t_map *map, int y, int x, char dir);
 int		is_map_closed(char **map);
 void	display_map(t_data *data);
+int		validate_map_empty_lines(char **map);
+int		validate_map_chars(char **map);
+int		validate_textures(t_map *map);
 
 // raycasting
 int		get_tex_pixel(void *tex, int x, int y);
