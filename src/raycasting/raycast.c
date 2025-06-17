@@ -7,8 +7,14 @@ static void	init_ray(t_ray *r, t_data *d, int x)
 	r->ray_y = d->map.dir_y + d->map.plane_y * r->cam;
 	r->map_x = (int)d->map.player_x;
 	r->map_y = (int)d->map.player_y;
-	r->delta_x = fabs(1.0 / r->ray_x);
-	r->delta_y = fabs(1.0 / r->ray_y);
+	if (r->ray_x == 0)
+		r->delta_x = 1e30;
+	else
+		r->delta_x = fabs(1.0 / r->ray_x);
+	if (r->ray_y == 0)
+		r->delta_y = 1e30;
+	else
+		r->delta_y = fabs(1.0 / r->ray_y);
 	if (r->ray_x < 0)
 		r->step_x = -1;
 	else
@@ -29,8 +35,21 @@ static void	init_ray(t_ray *r, t_data *d, int x)
 
 static void	run_dda(t_ray *r, char **map)
 {
-	while (map[r->map_y][r->map_x] != '1')
+	int	map_height;
+	int	map_width;
+
+	map_height = 0;
+	while (map[map_height])
+		map_height++;
+	while (1)
 	{
+		if (r->map_y < 0 || r->map_y >= map_height)
+			break ;
+		map_width = ft_strlen(map[r->map_y]);
+		if (r->map_x < 0 || r->map_x >= map_width)
+			break ;
+		if (map[r->map_y][r->map_x] == '1')
+			break ;
 		if (r->side_x < r->side_y)
 		{
 			r->side_x += r->delta_x;

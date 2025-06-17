@@ -83,7 +83,7 @@ int	is_map_closed(char **map)
 		x = 0;
 		while (map[y][x])
 		{
-			if (map[y][x] == '0')
+			if (map[y][x] == '0' || ft_strchr("NSWE", map[y][x]))
 			{
 				if (y == 0 || !map[y + 1] || x == 0 || !map[y][x + 1] || map[y
 					- 1][x] == ' ' || map[y + 1][x] == ' ' || map[y][x
