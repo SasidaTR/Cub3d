@@ -7,6 +7,27 @@ int	main_loop(t_data *data)
 	return (0);
 }
 
+void	init_map(t_map *map)
+{
+	map->N = NULL;
+	map->S = NULL;
+	map->E = NULL;
+	map->W = NULL;
+	map->map = NULL;
+	map->player_x = 0;
+	map->player_y = 0;
+	map->dir_x = 0;
+	map->dir_y = 0;
+	map->plane_x = 0;
+	map->plane_y = 0;
+	map->floor[0] = -1;
+	map->floor[1] = -1;
+	map->floor[2] = -1;
+	map->ceiling[0] = -1;
+	map->ceiling[1] = -1;
+	map->ceiling[2] = -1;
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -14,9 +35,9 @@ int	main(int argc, char **argv)
 	if (argc != 2)
 		return (printf("Usage: ./cub3D <map.cub>\n"), 1);
 	ft_bzero(&data, sizeof(t_data));
+	init_map(&data.map);
 	if (!load_map(argv[1], &data.map))
 		return (1);
-	// protection a fonds !
 	data.mlx = mlx_init();
 	if (!data.mlx)
 	{

@@ -1,5 +1,16 @@
 #include "../../include/cub3d.h"
 
+int	validate_required_elements(t_map *map)
+{
+	if (!map->N || !map->S || !map->W || !map->E)
+		return (0);
+	if (map->floor[0] == -1 || map->floor[1] == -1 || map->floor[2] == -1)
+		return (0);
+	if (map->ceiling[0] == -1 || map->ceiling[1] == -1 || map->ceiling[2] == -1)
+		return (0);
+	return (1);
+}
+
 static int	is_empty_line(char *line)
 {
 	int	i;

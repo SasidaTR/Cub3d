@@ -80,6 +80,8 @@ int	load_map(char *path, t_map *map)
 		return (close(fd), free_array(lines),
 			print_error("failed to read map lines"));
 	close(fd);
+	if (!validate_required_elements(map))
+		return (free_array(lines), print_error("missing required elements"));
 	if (!validate_map_empty_lines(lines))
 		return (free_array(lines), print_error("map contains invalid empty lines"));
 	if (!validate_map_chars(lines))
