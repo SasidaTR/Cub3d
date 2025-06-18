@@ -22,20 +22,40 @@ static int	check_player_spawn(t_map *map, int y, int x, int *found)
 	return (1);
 }
 
+char	**copy_map_lines(char **lines, int start)
+{
+	int		size;
+	int		i;
+	char	**copy;
+
+	size = ft_array_size(lines + start);
+	copy = ft_calloc(size + 1, sizeof(char *));
+	if (!copy)
+		return (NULL);
+	i = 0;
+	while (i < size)
+	{
+		copy[i] = ft_strdup(lines[start + i]);
+		if (!copy[i])
+			return (free_array(copy), NULL);
+		i++;
+	}
+	return (copy);
+}
+
 int	parse_map_data(t_map *map, char **lines, int i)
 {
 	int	y;
 	int	x;
 	int	found;
 
-	y = 0;
 	found = 0;
-	map->map = ft_calloc(ft_array_size(lines + i) + 1, sizeof(char *));
+	map->map = copy_map_lines(lines, i);
 	if (!map->map)
 		return (0);
-	while (lines[i])
+	y = 0;
+	while (map->map[y])
 	{
-		map->map[y] = ft_strdup(lines[i]);
 		x = 0;
 		while (map->map[y][x])
 		{
@@ -44,7 +64,6 @@ int	parse_map_data(t_map *map, char **lines, int i)
 			x++;
 		}
 		y++;
-		i++;
 	}
 	return (found);
 }
