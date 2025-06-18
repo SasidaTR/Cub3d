@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   raycasting_utils.c                                 :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/18 15:58:14 by douzgane          #+#    #+#             */
+/*   Updated: 2025/06/18 17:03:29 by douzgane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3d.h"
 
 int	get_tex_pixel(void *tex, int x, int y)
@@ -18,7 +30,9 @@ void	draw_ceiling(t_data *d, char *addr, int x, int limit)
 	int	y;
 	int	color;
 
-	color = (d->map.ceiling[0] << 16) | (d->map.ceiling[1] << 8) | d->map.ceiling[2];
+	color = (d->map.ceiling[0] << 16);
+	color |= (d->map.ceiling[1] << 8);
+	color |= d->map.ceiling[2];
 	y = 0;
 	while (y < limit)
 	{
@@ -32,7 +46,9 @@ void	draw_floor(t_data *d, char *addr, int x, int start)
 	int	y;
 	int	color;
 
-	color = (d->map.floor[0] << 16) | (d->map.floor[1] << 8) | d->map.floor[2];
+	color = (d->map.floor[0] << 16);
+	color |= (d->map.floor[1] << 8);
+	color |= d->map.floor[2];
 	y = start;
 	while (y < HEIGHT)
 	{
@@ -48,7 +64,7 @@ void	draw_wall(t_ray *r, char *addr, int x)
 	int	color;
 
 	y = r->start;
-	while (y < r->end)
+	while (y <= r->end)
 	{
 		tex_y = (int)(r->tex_pos) & (TEX_SIZE - 1);
 		r->tex_pos += r->step;

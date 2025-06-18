@@ -1,13 +1,25 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/18 15:53:39 by douzgane          #+#    #+#             */
+/*   Updated: 2025/06/18 17:24:42 by douzgane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
+# include "../libft/libft.h"
+# include "mlx.h"
 # include <fcntl.h>
 # include <math.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "../libft/libft.h"
-# include "mlx.h"
 
 # define WIDTH 800
 # define HEIGHT 600
@@ -46,7 +58,7 @@ typedef struct s_ray
 	double	step;
 	double	tex_pos;
 	void	*tex;
-}	t_ray;
+}			t_ray;
 
 typedef struct s_map
 {
@@ -67,7 +79,7 @@ typedef struct s_map
 	void	*tex_s;
 	void	*tex_w;
 	void	*tex_e;
-}	t_map;
+}			t_map;
 
 typedef struct s_data
 {
@@ -75,46 +87,51 @@ typedef struct s_data
 	void	*win;
 	t_map	map;
 	int		keys[65536];
-}	t_data;
+	int		win_width;
+	int		win_height;
+}			t_data;
 
 // input
-int		handle_key(int keycode, t_data *data);
-int		key_press(int keycode, t_data *data);
-int		key_release(int keycode, t_data *data);
-void	update_player(t_data *data);
-int		close_window(t_data *data);
-int		check_wall_collision(t_data *data, double new_x, double new_y);
+int			handle_key(int keycode, t_data *data);
+int			key_press(int keycode, t_data *data);
+int			key_release(int keycode, t_data *data);
+void		update_player(t_data *data);
+int			close_window(t_data *data);
+int			check_wall_collision(t_data *data, double new_x, double new_y);
 
 // map
-int		load_map(char *path, t_map *map);
-int		read_map_start(int fd, t_map *map, char ***lines, int *size);
-int		read_map_lines(int fd, char ***lines, int *size);
-int		assign_texture(char **dst, char *line, char *id);
-int		assign_color(int color[3], char *line, char *id);
-int		validate_textures(t_map *map);
-int		validate_required_elements(t_map *map);
-int		validate_map_empty_lines(char **map);
-int		validate_map_chars(char **map);
-int		is_map_closed(char **map);
-int		parse_map_data(t_map *map, char **lines, int i);
-void	init_player(t_map *map, int y, int x, char dir);
-int		parse_color(int color[3], char *line);
-void	display_map(t_data *data);
+int			load_map(char *path, t_map *map);
+int			read_map_start(int fd, t_map *map, char ***lines, int *size);
+int			read_map_lines(int fd, char ***lines, int *size);
+int			assign_texture(char **dst, char *line, char *id);
+int			assign_color(int color[3], char *line, char *id);
+int			validate_textures(t_map *map);
+int			validate_required_elements(t_map *map);
+int			validate_map_empty_lines(char **map);
+int			validate_map_chars(char **map);
+int			is_map_closed(char **map);
+int			parse_map_data(t_map *map, char **lines, int i);
+void		init_player(t_map *map, int y, int x, char dir);
+int			parse_color(int color[3], char *line);
+void		display_map(t_data *data);
 
 // raycasting
-int		get_tex_pixel(void *tex, int x, int y);
-void	render_column(t_data *data, char *addr, int x);
-void	draw_ceiling(t_data *d, char *addr, int x, int limit);
-void	draw_floor(t_data *d, char *addr, int x, int start);
-void	draw_wall(t_ray *r, char *addr, int x);
+int			get_tex_pixel(void *tex, int x, int y);
+void		render_column(t_data *data, char *addr, int x);
+void		draw_ceiling(t_data *d, char *addr, int x, int limit);
+void		draw_floor(t_data *d, char *addr, int x, int start);
+void		draw_wall(t_ray *r, char *addr, int x);
+void		run_dda(t_ray *r, char **map);
+void		project_wall(t_ray *r, t_data *d);
+void		select_tex(t_ray *r, t_data *d);
 
 // textures
-int		load_textures(t_data *data);
+int			load_textures(t_data *data);
 
 // utils
-void	free_array(char **array);
-int		print_error(char *msg);
-void	free_map_resources(t_map *map, void *mlx);
-void	free_all_resources(t_data *data);
+void		free_array(char **array);
+int			print_error(char *msg);
+void		free_map_resources(t_map *map, void *mlx);
+void		free_all_resources(t_data *data);
 
 #endif

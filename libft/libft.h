@@ -1,10 +1,22 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   libft.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/18 15:56:21 by douzgane          #+#    #+#             */
+/*   Updated: 2025/06/18 15:56:23 by douzgane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include "get_next_line.h"
 # include <stddef.h>
 # include <stdlib.h>
 # include <unistd.h>
-# include "get_next_line.h"
 
 int		ft_array_size(char **array);
 int		ft_atoi(const char *str);

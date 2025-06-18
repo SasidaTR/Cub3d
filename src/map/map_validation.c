@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_validation.c                                   :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/18 15:57:52 by douzgane          #+#    #+#             */
+/*   Updated: 2025/06/18 16:25:58 by douzgane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3d.h"
 
 int	is_empty_line(char *line)
@@ -16,25 +28,27 @@ int	is_empty_line(char *line)
 
 int	is_map_closed(char **map)
 {
-	int	y;
-	int	x;
+	int		y;
+	int		x;
 	char	c;
 
 	y = 0;
 	while (map[y])
 	{
 		x = 0;
-		while ((c = map[y][x]))
+		c = map[y][x];
+		while (c)
 		{
 			if (c == '0' || ft_strchr("NSWE", c))
 			{
 				if (y == 0 || !map[y + 1] || x == 0 || !map[y][x + 1])
 					return (0);
-				if (map[y - 1][x] == ' ' || map[y + 1][x] == ' ' ||
-					map[y][x - 1] == ' ' || map[y][x + 1] == ' ')
+				if (map[y - 1][x] == ' ' || map[y + 1][x] == ' ' || map[y][x
+					- 1] == ' ' || map[y][x + 1] == ' ')
 					return (0);
 			}
 			x++;
+			c = map[y][x];
 		}
 		y++;
 	}

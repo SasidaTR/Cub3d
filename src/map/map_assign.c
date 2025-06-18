@@ -1,8 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   map_assign.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/18 15:57:17 by douzgane          #+#    #+#             */
+/*   Updated: 2025/06/18 15:57:20 by douzgane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3d.h"
 
 int	assign_texture(char **dst, char *line, char *id)
 {
-	int		len;
+	int	len;
 
 	len = ft_strlen(id);
 	if (!ft_strncmp(line, id, len) && line[len] == ' ')
@@ -40,9 +52,8 @@ int	parse_color(int color[3], char *line)
 	color[0] = ft_atoi(rgb[0]);
 	color[1] = ft_atoi(rgb[1]);
 	color[2] = ft_atoi(rgb[2]);
-	if (color[0] < 0 || color[0] > 255 ||
-		color[1] < 0 || color[1] > 255 ||
-		color[2] < 0 || color[2] > 255)
+	if (color[0] < 0 || color[0] > 255 || color[1] < 0 || color[1] > 255
+		|| color[2] < 0 || color[2] > 255)
 		return (free_array(rgb), 0);
 	free_array(rgb);
 	return (1);

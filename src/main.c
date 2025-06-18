@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/06/18 15:58:46 by douzgane          #+#    #+#             */
+/*   Updated: 2025/06/18 16:49:40 by douzgane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../include/cub3d.h"
 
 int	main_loop(t_data *data)
@@ -28,6 +40,33 @@ void	init_map(t_map *map)
 	map->ceiling[2] = -1;
 }
 
+static int	initialize_mlx(t_data *data)
+{
+	data->mlx = mlx_init();
+	if (!data->mlx)
+	{
+		free_map_resources(&data->map, NULL);
+		return (printf("Error\nFailed to initialize MLX\n"), 0);
+	}
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "Cub3D");
+	if (!data->win)
+	{
+		free_map_resources(&data->map, data->mlx);
+		mlx_destroy_display(data->mlx);
+		free(data->mlx);
+		return (printf("Error\nFailed to create window\n"), 0);
+	}
+	return (1);
+}
+
+static void	setup_hooks(t_data *data)
+{
+	mlx_hook(data->win, 2, 1L << 0, key_press, data);
+	mlx_hook(data->win, 3, 1L << 1, key_release, data);
+	mlx_hook(data->win, 17, 0, close_window, data);
+	mlx_loop_hook(data->mlx, main_loop, data);
+}
+
 int	main(int argc, char **argv)
 {
 	t_data	data;
@@ -38,29 +77,14 @@ int	main(int argc, char **argv)
 	init_map(&data.map);
 	if (!load_map(argv[1], &data.map))
 		return (1);
-	data.mlx = mlx_init();
-	if (!data.mlx)
-	{
-		free_map_resources(&data.map, NULL);
-		return (printf("Error\nFailed to initialize MLX\n"), 1);
-	}
-	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3D");
-	if (!data.win)
-	{
-		free_map_resources(&data.map, data.mlx);
-		mlx_destroy_display(data.mlx);
-		free(data.mlx);
-		return (printf("Error\nFailed to create window\n"), 1);
-	}
+	if (!initialize_mlx(&data))
+		return (1);
 	if (!load_textures(&data))
 	{
 		free_all_resources(&data);
 		return (printf("Error\nFailed to load textures\n"), 1);
 	}
-	mlx_hook(data.win, 2, 1L << 0, key_press, &data);
-	mlx_hook(data.win, 3, 1L << 1, key_release, &data);
-	mlx_hook(data.win, 17, 0, close_window, &data);
-	mlx_loop_hook(data.mlx, main_loop, &data);
+	setup_hooks(&data);
 	mlx_loop(data.mlx);
 	free_all_resources(&data);
 	return (0);
