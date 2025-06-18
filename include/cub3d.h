@@ -85,17 +85,21 @@ void	update_player(t_data *data);
 int		close_window(t_data *data);
 int		check_wall_collision(t_data *data, double new_x, double new_y);
 
-// parsing
+// map
 int		load_map(char *path, t_map *map);
-int		parse_color(int color[3], char *line);
-int		parse_map_data(t_map *map, char **lines, int i);
-void	init_player(t_map *map, int y, int x, char dir);
-int		is_map_closed(char **map);
-void	display_map(t_data *data);
-int		validate_map_empty_lines(char **map);
-int		validate_map_chars(char **map);
+int		read_map_start(int fd, t_map *map, char ***lines, int *size);
+int		read_map_lines(int fd, char ***lines, int *size);
+int		assign_texture(char **dst, char *line, char *id);
+int		assign_color(int color[3], char *line, char *id);
 int		validate_textures(t_map *map);
 int		validate_required_elements(t_map *map);
+int		validate_map_empty_lines(char **map);
+int		validate_map_chars(char **map);
+int		is_map_closed(char **map);
+int		parse_map_data(t_map *map, char **lines, int i);
+void	init_player(t_map *map, int y, int x, char dir);
+int		parse_color(int color[3], char *line);
+void	display_map(t_data *data);
 
 // raycasting
 int		get_tex_pixel(void *tex, int x, int y);
