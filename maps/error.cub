@@ -1,4 +1,4 @@
-NO ./textures/debug_north.xpm
+NO ./textures/bookshelf.xpm
 SO ./textures/debug_south.xpm
 WE ./textures/debug_west.xpm
 EA ./textures/debug_east.xpm

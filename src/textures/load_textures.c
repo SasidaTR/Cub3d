@@ -14,16 +14,20 @@
 
 int	load_textures(t_data *data)
 {
-	data->map.tex_n = mlx_xpm_file_to_image(data->mlx, data->map.N,
-			&(int){TEX_SIZE}, &(int){TEX_SIZE});
-	data->map.tex_s = mlx_xpm_file_to_image(data->mlx, data->map.S,
-			&(int){TEX_SIZE}, &(int){TEX_SIZE});
-	data->map.tex_w = mlx_xpm_file_to_image(data->mlx, data->map.W,
-			&(int){TEX_SIZE}, &(int){TEX_SIZE});
-	data->map.tex_e = mlx_xpm_file_to_image(data->mlx, data->map.E,
-			&(int){TEX_SIZE}, &(int){TEX_SIZE});
-	if (!data->map.tex_n || !data->map.tex_s || !data->map.tex_w
-		|| !data->map.tex_e)
+	int	w;
+	int	h;
+
+	data->map.tex_n = mlx_xpm_file_to_image(data->mlx, data->map.N, &w, &h);
+	if (!data->map.tex_n || w != TEX_SIZE || h != TEX_SIZE)
+		return (0);
+	data->map.tex_s = mlx_xpm_file_to_image(data->mlx, data->map.S, &w, &h);
+	if (!data->map.tex_s || w != TEX_SIZE || h != TEX_SIZE)
+		return (0);
+	data->map.tex_w = mlx_xpm_file_to_image(data->mlx, data->map.W, &w, &h);
+	if (!data->map.tex_w || w != TEX_SIZE || h != TEX_SIZE)
+		return (0);
+	data->map.tex_e = mlx_xpm_file_to_image(data->mlx, data->map.E, &w, &h);
+	if (!data->map.tex_e || w != TEX_SIZE || h != TEX_SIZE)
 		return (0);
 	return (1);
 }
