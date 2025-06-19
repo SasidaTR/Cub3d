@@ -9,8 +9,8 @@
 # include <stdlib.h>
 # include <unistd.h>
 
-# define WIDTH 800
-# define HEIGHT 600
+# define WIDTH 1200
+# define HEIGHT 500
 # define TEX_SIZE 1024
 
 # define KEY_W 119
