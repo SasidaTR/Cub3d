@@ -58,7 +58,7 @@ void	project_wall(t_ray *r, t_data *d)
 		r->dist = r->side_x - r->delta_x;
 	else
 		r->dist = r->side_y - r->delta_y;
-	r->line_height = (int)(HEIGHT / r->dist);
+	r->line_height = (int)(600 / r->dist);
 	r->start = HEIGHT / 2 - r->line_height / 2;
 	if (r->start < 0)
 		r->start = 0;
