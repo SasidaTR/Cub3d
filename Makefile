@@ -10,9 +10,9 @@ MLX_DIR = minilibx-linux
 MLX = $(MLX_DIR)/libmlx.a
 MLX_FLAGS = -L$(MLX_DIR) -lmlx -lXext -lX11 -lm
 
-SRC = $(wildcard src/*.c src/*/*.c)
+SRC = $(shell find src -name '*.c')
 OBJ_DIR = obj
-OBJ = $(SRC:src/%.c=$(OBJ_DIR)/%.o)
+OBJ = $(patsubst src/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
 all: $(NAME)
 

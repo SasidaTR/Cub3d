@@ -10,7 +10,7 @@
 # include <unistd.h>
 
 # define WIDTH 1200
-# define HEIGHT 500
+# define HEIGHT 800
 # define TEX_SIZE 1024
 
 # define KEY_W 119
@@ -119,5 +119,8 @@ void		free_array(char **array);
 int			print_error(char *msg);
 void		free_map_resources(t_map *map, void *mlx);
 void		free_all_resources(t_data *data);
+
+// bonus
+void	draw_minimap();
 
 #endif
