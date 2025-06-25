@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:58:46 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 16:49:40 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/06/25 10:22:36 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,4 +81,3 @@ int	main(int argc, char **argv)
 	free_all_resources(&data);
 	return (0);
 }
-

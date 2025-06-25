@@ -13,6 +13,11 @@
 # define HEIGHT 800
 # define TEX_SIZE 1024
 
+// Minimap constants
+# define MINIMAP_SIZE 150
+# define MINIMAP_MARGIN 15
+# define MINIMAP_ALPHA 0.95
+
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
@@ -121,6 +126,6 @@ void		free_map_resources(t_map *map, void *mlx);
 void		free_all_resources(t_data *data);
 
 // bonus
-void	draw_minimap();
+void	draw_minimap(t_data *data, char *addr);
 
 #endif
