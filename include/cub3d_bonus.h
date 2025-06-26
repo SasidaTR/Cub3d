@@ -111,6 +111,8 @@ int			key_release(int keycode, t_data *data);
 void		update_player(t_data *data);
 int			close_window(t_data *data);
 int			check_wall_collision(t_data *data, double new_x, double new_y);
+void		rotate_cam(t_data *d, double rot);
+int			mouse_move(int x, int y, t_data *data);
 
 // map
 int			load_map(char *path, t_map *map);
@@ -148,12 +150,11 @@ void		free_map_resources(t_map *map, void *mlx);
 void		free_all_resources(t_data *data);
 
 //minimap
-void	draw_minimap(t_data *data, char *addr);
-void	draw_tile(char *addr, int x, int y, int size, int color);
-void	draw_line(char *addr, int x0, int y0, int x1, int y1, int color);
-t_line_params	init_line_params(int x0, int y0, int x1, int y1);
+void		draw_minimap(t_data *data, char *addr);
+void		draw_tile(char *addr, int x, int y, int size, int color);
+void		draw_line(char *addr, int x0, int y0, int x1, int y1, int color);
 t_fov_params	init_fov_params(t_data *data, int tile_size);
-void	draw_fov(t_data *data, char *addr, int tile_size);
-void	draw_player(t_data *data, char *addr, int tile_size);
+void		draw_fov(t_data *data, char *addr, int tile_size);
+void		draw_player(t_data *data, char *addr, int tile_size);
 
 #endif

@@ -43,8 +43,14 @@ t_line_params	init_line_params(int x0, int y0, int x1, int y1)
 
 	params.dx = abs(x1 - x0);
 	params.dy = abs(y1 - y0);
-	params.sx = (x0 < x1) ? 1 : -1;
-	params.sy = (y0 < y1) ? 1 : -1;
+	if (x0 < x1)
+		params.sx = 1;
+	else
+		params.sx = -1;
+	if (y0 < y1)
+		params.sy = 1;
+	else
+		params.sy = -1;
 	return (params);
 }
 
