@@ -13,11 +13,6 @@
 # define HEIGHT 800
 # define TEX_SIZE 1024
 
-// Minimap constants
-# define MINIMAP_SIZE 150
-# define MINIMAP_MARGIN 15
-# define MINIMAP_ALPHA 0.95
-
 # define KEY_W 119
 # define KEY_A 97
 # define KEY_S 115
@@ -27,6 +22,34 @@
 # define KEY_ESC 65307
 # define MOVE_SPEED 0.005
 # define ROT_SPEED 0.005
+
+# define COLOR_WALL 0xFFFFFF
+# define COLOR_FLOOR 0x404040
+# define COLOR_PLAYER 0xFF0000
+# define COLOR_FOV 0x00FFFF
+# define MINIMAP_SIZE 150
+# define MINIMAP_MARGIN 15
+# define MINIMAP_ALPHA 0.95
+
+
+typedef struct s_line_params
+{
+	int	dx;
+	int	dy;
+	int	sx;
+	int	sy;
+}	t_line_params;
+
+typedef struct s_fov_params
+{
+	int		center_x;
+	int		center_y;
+	int		fov_len;
+	double	left_x;
+	double	left_y;
+	double	right_x;
+	double	right_y;
+}	t_fov_params;
 
 typedef struct s_ray
 {
@@ -125,7 +148,14 @@ int			print_error(char *msg);
 void		free_map_resources(t_map *map, void *mlx);
 void		free_all_resources(t_data *data);
 
-// bonus
+//minimap
 void	draw_minimap(t_data *data, char *addr);
+void	draw_tile(char *addr, int x, int y, int size, int color);
+void	draw_line(char *addr, int x0, int y0, int x1, int y1, int color);
+t_line_params	init_line_params(int x0, int y0, int x1, int y1);
+t_fov_params	init_fov_params(t_data *data, int tile_size);
+void	draw_fov(t_data *data, char *addr, int tile_size);
+void	draw_player(t_data *data, char *addr, int tile_size);
+
 
 #endif
