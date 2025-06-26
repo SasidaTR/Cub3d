@@ -1,4 +1,4 @@
-#include "../../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 t_fov_params	init_fov_params(t_data *data, int tile_size)
 {

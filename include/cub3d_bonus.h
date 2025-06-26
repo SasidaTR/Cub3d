@@ -31,7 +31,6 @@
 # define MINIMAP_MARGIN 15
 # define MINIMAP_ALPHA 0.95
 
-
 typedef struct s_line_params
 {
 	int	dx;
@@ -147,5 +146,14 @@ void		free_array(char **array);
 int			print_error(char *msg);
 void		free_map_resources(t_map *map, void *mlx);
 void		free_all_resources(t_data *data);
+
+//minimap
+void	draw_minimap(t_data *data, char *addr);
+void	draw_tile(char *addr, int x, int y, int size, int color);
+void	draw_line(char *addr, int x0, int y0, int x1, int y1, int color);
+t_line_params	init_line_params(int x0, int y0, int x1, int y1);
+t_fov_params	init_fov_params(t_data *data, int tile_size);
+void	draw_fov(t_data *data, char *addr, int tile_size);
+void	draw_player(t_data *data, char *addr, int tile_size);
 
 #endif

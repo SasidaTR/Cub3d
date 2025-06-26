@@ -1,4 +1,4 @@
-#include "../../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 static int	calculate_tile_size(t_map *map)
 {
