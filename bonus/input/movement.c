@@ -30,28 +30,35 @@ static void	try_move(t_data *d, double new_x, double new_y)
 	}
 }
 
+static void	add_movement(double *x, double *y, double dx, double dy)
+{
+	*x += dx * MOVE_SPEED;
+	*y += dy * MOVE_SPEED;
+}
+
 static void	move_player(t_data *d)
 {
 	double	x;
 	double	y;
+	double	move_x;
+	double	move_y;
 
 	x = d->map.player_x;
 	y = d->map.player_y;
+	move_x = 0;
+	move_y = 0;
 	if (d->keys[KEY_W])
-		try_move(d, x + d->map.dir_x * MOVE_SPEED, y + d->map.dir_y
-			* MOVE_SPEED);
+		add_movement(&move_x, &move_y, d->map.dir_x, d->map.dir_y);
 	if (d->keys[KEY_S])
-		try_move(d, x - d->map.dir_x * MOVE_SPEED, y - d->map.dir_y
-			* MOVE_SPEED);
+		add_movement(&move_x, &move_y, -d->map.dir_x, -d->map.dir_y);
 	if (d->keys[KEY_A])
-		try_move(d, x - d->map.plane_x * MOVE_SPEED, y - d->map.plane_y
-			* MOVE_SPEED);
+		add_movement(&move_x, &move_y, -d->map.plane_x, -d->map.plane_y);
 	if (d->keys[KEY_D])
-		try_move(d, x + d->map.plane_x * MOVE_SPEED, y + d->map.plane_y
-			* MOVE_SPEED);
+		add_movement(&move_x, &move_y, d->map.plane_x, d->map.plane_y);
+	try_move(d, x + move_x, y + move_y);
 }
 
-static void	rotate_cam(t_data *d, double rot)
+void	rotate_cam(t_data *d, double rot)
 {
 	double	old_dir_x;
 	double	old_plane_x;

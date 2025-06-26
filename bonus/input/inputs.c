@@ -10,13 +10,28 @@
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
+
+int	mouse_move(int x, int y, t_data *data)
+{
+	int	center_x;
+
+	(void)y;
+	center_x = WIDTH / 2;
+	if (x != center_x)
+	{
+		rotate_cam(data, (x - center_x) * 0.002);
+		mlx_mouse_move(data->mlx, data->win, center_x, HEIGHT / 2);
+	}
+	return (0);
+}
 
 int	key_press(int keycode, t_data *data)
 {
 	if (keycode == KEY_ESC)
 		close_window(data);
-	data->keys[keycode] = 1;
+	if (keycode >= 0 && keycode < 300)
+		data->keys[keycode] = 1;
 	return (0);
 }
 
