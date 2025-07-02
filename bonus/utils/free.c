@@ -6,11 +6,11 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:58:33 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 15:58:34 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:46:31 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 void	free_array(char **array)
 {
@@ -29,14 +29,14 @@ void	free_array(char **array)
 
 void	free_map_resources(t_map *map, void *mlx)
 {
-	if (map->N)
-		free(map->N);
-	if (map->S)
-		free(map->S);
-	if (map->W)
-		free(map->W);
-	if (map->E)
-		free(map->E);
+	if (map->north)
+		free(map->north);
+	if (map->south)
+		free(map->south);
+	if (map->west)
+		free(map->west);
+	if (map->east)
+		free(map->east);
 	if (mlx && map->tex_n)
 		mlx_destroy_image(mlx, map->tex_n);
 	if (mlx && map->tex_s)

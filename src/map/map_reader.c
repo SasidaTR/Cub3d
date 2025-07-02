@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:45 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 16:49:40 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:38:24 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,9 +34,9 @@ int	read_map_lines(int fd, char ***lines, int *size)
 
 static int	handle_map_line(char *line, t_map *map, char ***lines, int *size)
 {
-	if (assign_texture(&map->N, line, "NO") || assign_texture(&map->S, line,
-			"SO") || assign_texture(&map->W, line, "WE")
-		|| assign_texture(&map->E, line, "EA"))
+	if (assign_texture(&map->north, line, "NO") || assign_texture(&map->south,
+			line, "SO") || assign_texture(&map->west, line, "WE")
+		|| assign_texture(&map->east, line, "EA"))
 		return (0);
 	else if (assign_color(map->floor, line, "F"))
 		return (0);

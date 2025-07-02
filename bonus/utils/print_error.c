@@ -6,11 +6,11 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:58:39 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 15:58:40 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:46:31 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 int	print_error(char *msg)
 {

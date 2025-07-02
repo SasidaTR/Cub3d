@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:58:46 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/25 10:22:36 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:36:21 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	main_loop(t_data *data)
 
 void	init_map(t_map *map)
 {
-	map->N = NULL;
-	map->S = NULL;
-	map->E = NULL;
-	map->W = NULL;
+	map->north = NULL;
+	map->south = NULL;
+	map->east = NULL;
+	map->west = NULL;
 	map->map = NULL;
 	map->player_x = 0;
 	map->player_y = 0;
