@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   minimap.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/02 16:17:53 by douzgane          #+#    #+#             */
+/*   Updated: 2025/07/02 16:26:49 by douzgane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../../include/cub3d_bonus.h"
 
 static int	calculate_tile_size(t_map *map)
@@ -27,10 +39,11 @@ static int	calculate_tile_size(t_map *map)
 
 static void	draw_map_tile(char *addr, t_data *data, int map_x, int map_y)
 {
-	char	c;
-	int		tile_size;
-	int		coords[2];
-	int		color;
+	char			c;
+	int				tile_size;
+	int				coords[2];
+	int				color;
+	t_tile_params	params;
 
 	tile_size = calculate_tile_size(&data->map);
 	c = data->map.map[map_y][map_x];
@@ -42,7 +55,11 @@ static void	draw_map_tile(char *addr, t_data *data, int map_x, int map_y)
 			color = COLOR_WALL;
 		else
 			color = COLOR_FLOOR;
-		draw_tile(addr, coords[0], coords[1], tile_size, color);
+		params.x = coords[0];
+		params.y = coords[1];
+		params.size = tile_size;
+		params.color = color;
+		draw_tile(addr, params);
 	}
 }
 

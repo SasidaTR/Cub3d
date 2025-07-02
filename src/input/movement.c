@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:56:56 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 16:13:05 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:18:41 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ static void	try_move(t_data *d, double new_x, double new_y)
 		d->map.player_y = new_y;
 	}
 }
-
 
 static void	add_movement(double *x, double *y, double dx, double dy)
 {

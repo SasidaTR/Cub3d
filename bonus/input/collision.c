@@ -6,11 +6,11 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:56:45 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 15:56:46 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:46:31 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 static int	get_map_height(t_data *data)
 {

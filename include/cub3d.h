@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   cub3d.h                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/07/02 16:19:56 by douzgane          #+#    #+#             */
+/*   Updated: 2025/07/02 16:36:21 by douzgane         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef CUB3D_H
 # define CUB3D_H
 
@@ -31,14 +43,13 @@
 # define MINIMAP_MARGIN 15
 # define MINIMAP_ALPHA 0.95
 
-
 typedef struct s_line_params
 {
-	int	dx;
-	int	dy;
-	int	sx;
-	int	sy;
-}	t_line_params;
+	int		dx;
+	int		dy;
+	int		sx;
+	int		sy;
+}			t_line_params;
 
 typedef struct s_fov_params
 {
@@ -49,7 +60,7 @@ typedef struct s_fov_params
 	double	left_y;
 	double	right_x;
 	double	right_y;
-}	t_fov_params;
+}			t_fov_params;
 
 typedef struct s_ray
 {
@@ -79,10 +90,10 @@ typedef struct s_ray
 typedef struct s_map
 {
 	char	**map;
-	char	*N;
-	char	*S;
-	char	*W;
-	char	*E;
+	char	*north;
+	char	*south;
+	char	*west;
+	char	*east;
 	int		floor[3];
 	int		ceiling[3];
 	double	player_x;
