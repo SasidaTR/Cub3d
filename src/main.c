@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:58:46 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/02 16:36:21 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/02 16:56:00 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	main(int argc, char **argv)
 	ft_bzero(&data, sizeof(t_data));
 	init_map(&data.map);
 	if (!load_map(argv[1], &data.map))
-		return (1);
+		return (free_map_resources(&data.map, NULL), 1);
 	if (!initialize_mlx(&data))
 		return (free_map_resources(&data.map, NULL), 1);
 	if (!load_textures(&data))
