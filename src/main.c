@@ -60,7 +60,8 @@ int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (argc != 2)
+	if (argc != 2 || !strrchr(argv[1], '.')
+		|| strcmp(strrchr(argv[1], '.'), ".cub"))
 		return (printf("Usage: ./cub3D <map.cub>\n"), 1);
 	ft_bzero(&data, sizeof(t_data));
 	init_map(&data.map);
