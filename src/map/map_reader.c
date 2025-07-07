@@ -32,14 +32,26 @@ int	read_map_lines(int fd, char ***lines, int *size)
 	return (1);
 }
 
-static int	handle_map_line(char *line, t_map *map, char ***lines, int *size)
+static int	is_invalid_line_or_duplicate(char *line, t_map *map)
 {
-	if ((ft_strncmp(line, "NO", 2) == 0 && map->north)
+	if ((*line != '\0' && *line != '\n'
+			&& ft_strncmp(line, "NO", 2) && ft_strncmp(line, "SO", 2)
+			&& ft_strncmp(line, "WE", 2) && ft_strncmp(line, "EA", 2)
+			&& ft_strncmp(line, "F", 1) && ft_strncmp(line, "C", 1)
+			&& !ft_strchr(line, '1'))
+		|| (ft_strncmp(line, "NO", 2) == 0 && map->north)
 		|| (ft_strncmp(line, "SO", 2) == 0 && map->south)
 		|| (ft_strncmp(line, "EA", 2) == 0 && map->east)
 		|| (ft_strncmp(line, "WE", 2) == 0 && map->west)
 		|| (ft_strncmp(line, "F", 1) == 0 && map->floor[0] != -1)
 		|| (ft_strncmp(line, "C", 1) == 0 && map->ceiling[0] != -1))
+		return (1);
+	return (0);
+}
+
+static int	handle_map_line(char *line, t_map *map, char ***lines, int *size)
+{
+	if (is_invalid_line_or_duplicate(line, map))
 		return (-1);
 	if (assign_texture(&map->north, line, "NO") || assign_texture(&map->south,
 			line, "SO") || assign_texture(&map->west, line, "WE")
