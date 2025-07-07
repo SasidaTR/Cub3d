@@ -34,6 +34,13 @@ int	read_map_lines(int fd, char ***lines, int *size)
 
 static int	handle_map_line(char *line, t_map *map, char ***lines, int *size)
 {
+	if ((ft_strncmp(line, "NO", 2) == 0 && map->north)
+		|| (ft_strncmp(line, "SO", 2) == 0 && map->south)
+		|| (ft_strncmp(line, "EA", 2) == 0 && map->east)
+		|| (ft_strncmp(line, "WE", 2) == 0 && map->west)
+		|| (ft_strncmp(line, "F", 1) == 0 && map->floor[0] != -1)
+		|| (ft_strncmp(line, "C", 1) == 0 && map->ceiling[0] != -1))
+		return (-1);
 	if (assign_texture(&map->north, line, "NO") || assign_texture(&map->south,
 			line, "SO") || assign_texture(&map->west, line, "WE")
 		|| assign_texture(&map->east, line, "EA"))
