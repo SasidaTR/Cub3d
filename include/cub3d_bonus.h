@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:19:42 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/09 16:06:24 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:58:45 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,6 +157,11 @@ int				is_map_closed(char **map);
 int				parse_map_data(t_map *map, char **lines, int i);
 void			init_player(t_map *map, int y, int x, char dir);
 int				parse_color(int color[3], char *line);
+int				validate_rgb_components(char **rgb, char *trimmed[3]);
+int				set_color_values(int color[3], char *trimmed[3]);
+int				is_valid_rgb_value(char *str);
+int				check_rgb_format(char *str);
+int				check_rgb_range(char *str);
 void			display_map(t_data *data);
 int				is_empty_or_whitespace(char *line);
 int				is_valid_element_line(char *line);
