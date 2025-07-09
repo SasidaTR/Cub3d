@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:45 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/02 16:38:24 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:06:24 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,30 +23,16 @@ int	read_map_lines(int fd, char ***lines, int *size)
 		tmp = ft_realloc(*lines, (*size) * sizeof(char *), (*size + 2)
 				* sizeof(char *));
 		if (!tmp)
+		{
+			free_array(*lines);
 			return (free(line), 0);
+		}
 		*lines = tmp;
 		(*lines)[(*size)++] = line;
 		(*lines)[*size] = NULL;
 		line = get_next_line(fd);
 	}
 	return (1);
-}
-
-static int	is_invalid_line_or_duplicate(char *line, t_map *map)
-{
-	if ((*line != '\0' && *line != '\n'
-			&& ft_strncmp(line, "NO", 2) && ft_strncmp(line, "SO", 2)
-			&& ft_strncmp(line, "WE", 2) && ft_strncmp(line, "EA", 2)
-			&& ft_strncmp(line, "F", 1) && ft_strncmp(line, "C", 1)
-			&& !ft_strchr(line, '1'))
-		|| (ft_strncmp(line, "NO", 2) == 0 && map->north)
-		|| (ft_strncmp(line, "SO", 2) == 0 && map->south)
-		|| (ft_strncmp(line, "EA", 2) == 0 && map->east)
-		|| (ft_strncmp(line, "WE", 2) == 0 && map->west)
-		|| (ft_strncmp(line, "F", 1) == 0 && map->floor[0] != -1)
-		|| (ft_strncmp(line, "C", 1) == 0 && map->ceiling[0] != -1))
-		return (1);
-	return (0);
 }
 
 static int	handle_map_line(char *line, t_map *map, char ***lines, int *size)

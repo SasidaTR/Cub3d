@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:58:39 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 15:58:40 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:49:28 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	print_error(char *msg)
 {
-	printf("Error: %s\n", msg);
+	write(2, "Error\n", 6);
+	write(2, msg, ft_strlen(msg));
+	write(2, "\n", 1);
 	return (0);
 }

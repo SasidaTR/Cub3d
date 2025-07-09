@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:19:42 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/02 16:40:09 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/09 16:06:24 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,9 @@ int				parse_map_data(t_map *map, char **lines, int i);
 void			init_player(t_map *map, int y, int x, char dir);
 int				parse_color(int color[3], char *line);
 void			display_map(t_data *data);
+int				is_empty_or_whitespace(char *line);
+int				is_valid_element_line(char *line);
+int				is_invalid_line_or_duplicate(char *line, t_map *map);
 
 // raycasting
 int				get_tex_pixel(void *tex, int x, int y);
