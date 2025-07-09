@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:17 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 15:57:20 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/09 15:51:21 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,13 @@ int	assign_color(int color[3], char *line, char *id)
 	if (!ft_strncmp(line, id, len) && line[len] == ' ')
 	{
 		trimmed = ft_strtrim(line + len + 1, " \n");
+		if (!trimmed)
+			return (0);
 		if (!parse_color(color, trimmed))
-			return (free(trimmed), 0);
+		{
+			free(trimmed);
+			return (0);
+		}
 		free(trimmed);
 		return (1);
 	}
