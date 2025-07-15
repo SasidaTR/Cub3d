@@ -3,13 +3,20 @@ SO ./textures/horror_wall_2.xpm
 WE ./textures/horror_wall_3.xpm
 EA ./textures/horror_wall_4.xpm
 
-C 190,170,130
-F 80,0,30
+C 190,170,-255
+fvcgd
+
+F 80,0,25
+
+
+
+
 
 1111111
 1001001
-1100011
-100S001
-1100011
+1100011    1
+100S001   101
+1100011    1
 1001001
 1111111
+
