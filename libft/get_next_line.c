@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:56:07 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/15 18:05:25 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/15 19:05:37 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,6 +107,10 @@ void	get_next_line_cleanup(int fd)
 
 	if (fd < 0)
 		return ;
-	while ((line = get_next_line(fd)) != NULL)
+	line = get_next_line(fd);
+	while (line != NULL)
+	{
 		free(line);
+		line = get_next_line(fd);
+	}
 }
