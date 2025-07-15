@@ -26,45 +26,33 @@ int	is_empty_line(char *line)
 	return (1);
 }
 
-static int	check_cell_boundaries(char **map, int y, int x, int line_len)
+static int	is_invalid_adjacent(char **map, int y, int x)
 {
-	char	c;
-
-	c = map[y][x];
-	if (c == '0' || ft_strchr("NSWE", c))
-	{
-		if (y == 0 || !map[y + 1] || x == 0 || x >= line_len)
-			return (0);
-		if (x >= (int)ft_strlen(map[y - 1]) || x >= (int)ft_strlen(map[y + 1]))
-			return (0);
-		if (map[y - 1][x] == ' ' || map[y + 1][x] == ' ' || map[y][x
-			- 1] == ' ' || map[y][x + 1] == ' ')
-			return (0);
-	}
-	return (1);
+	if (!map[y - 1] || x >= (int)ft_strlen(map[y - 1]) || map[y - 1][x] == ' ' || map[y - 1][x] == '\n')
+		return (1);
+	if (!map[y + 1] || x >= (int)ft_strlen(map[y + 1]) || map[y + 1][x] == ' ' || map[y + 1][x] == '\n')
+		return (1);
+	if (x == 0 || map[y][x - 1] == ' ' || map[y][x - 1] == '\n')
+		return (1);
+	if (!map[y][x + 1] || map[y][x + 1] == ' ' || map[y][x + 1] == '\n')
+		return (1);
+	return (0);
 }
 
 int	is_map_closed(char **map)
 {
-	int		y;
-	int		x;
-	int		line_len;
-	char	c;
+	int	y;
+	int	x;
 
-	y = 0;
-	while (map[y])
+	y = 1;
+	while (map[y + 1])
 	{
 		x = 0;
-		line_len = ft_strlen(map[y]);
-		if (line_len > 0 && map[y][line_len - 1] == '\n')
-			line_len--;
-		c = map[y][x];
-		while (c && c != '\n')
+		while (map[y][x])
 		{
-			if (!check_cell_boundaries(map, y, x, line_len))
+			if (map[y][x] == '0' && is_invalid_adjacent(map, y, x))
 				return (0);
 			x++;
-			c = map[y][x];
 		}
 		y++;
 	}

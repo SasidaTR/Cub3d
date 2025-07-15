@@ -32,8 +32,8 @@
 # define KEY_LEFT 65361
 # define KEY_RIGHT 65363
 # define KEY_ESC 65307
-# define MOVE_SPEED 0.005
-# define ROT_SPEED 0.005
+# define MOVE_SPEED 0.01
+# define ROT_SPEED 0.01
 
 # define COLOR_WALL 0xFFFFFF
 # define COLOR_FLOOR 0x404040
