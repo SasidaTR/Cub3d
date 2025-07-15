@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:25 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/09 16:00:43 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/15 18:05:25 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,13 +63,14 @@ int	load_map(char *path, t_map *map)
 	lines = NULL;
 	size = 0;
 	if (!read_map_start(fd, map, &lines, &size))
-		return (close(fd), print_error("invalid content or format in file"));
+		return (get_next_line_cleanup(fd), close(fd), print_error("invalid content or format in file"));
 	if (!validate_textures(map))
-		return (close(fd), free_array(lines),
+		return (get_next_line_cleanup(fd), close(fd), free_array(lines),
 			print_error("invalid texture paths"));
 	if (!read_map_lines(fd, &lines, &size))
-		return (close(fd), free_array(lines),
+		return (get_next_line_cleanup(fd), close(fd), free_array(lines),
 			print_error("failed to read map lines"));
+	get_next_line_cleanup(fd);
 	close(fd);
 	ok = validate_and_parse_map(map, lines);
 	free_array(lines);

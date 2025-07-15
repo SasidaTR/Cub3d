@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:19:56 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/09 16:58:45 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:42:20 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,6 +135,10 @@ int			validate_required_elements(t_map *map);
 int			validate_map_empty_lines(char **map);
 int			validate_map_chars(char **map);
 int			is_map_closed(char **map);
+int			is_invalid_adjacent(char **map, int y, int x);
+int			check_first_line(char **map);
+int			check_last_line(char **map);
+int			check_middle_lines(char **map);
 int			parse_map_data(t_map *map, char **lines, int i);
 void		init_player(t_map *map, int y, int x, char dir);
 int			parse_color(int color[3], char *line);

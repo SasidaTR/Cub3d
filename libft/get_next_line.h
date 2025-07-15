@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:56:14 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 15:56:17 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/15 18:05:25 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 # endif
 
 char	*get_next_line(int fd);
+void	get_next_line_cleanup(int fd);
 char	*gnl_strjoin(char *s1, char *s2);
 int		gnl_strlen(const char *s);
 int		gnl_strchr(const char *s, int c);

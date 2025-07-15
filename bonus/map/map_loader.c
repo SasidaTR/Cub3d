@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:25 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/25 10:34:45 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/15 18:37:23 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,6 @@ static void	render_frame(t_data *d, void *img, char *addr)
 	x = 0;
 	while (x < WIDTH)
 		render_column(d, addr, x++);
-	draw_minimap(d, addr);
 	mlx_put_image_to_window(d->mlx, d->win, img, 0, 0);
 }
 
@@ -64,13 +63,14 @@ int	load_map(char *path, t_map *map)
 	lines = NULL;
 	size = 0;
 	if (!read_map_start(fd, map, &lines, &size))
-		return (close(fd), print_error("invalid map elements"));
+		return (get_next_line_cleanup(fd), close(fd), print_error("invalid content or format in file"));
 	if (!validate_textures(map))
-		return (close(fd), free_array(lines),
+		return (get_next_line_cleanup(fd), close(fd), free_array(lines),
 			print_error("invalid texture paths"));
 	if (!read_map_lines(fd, &lines, &size))
-		return (close(fd), free_array(lines),
+		return (get_next_line_cleanup(fd), close(fd), free_array(lines),
 			print_error("failed to read map lines"));
+	get_next_line_cleanup(fd);
 	close(fd);
 	ok = validate_and_parse_map(map, lines);
 	free_array(lines);
