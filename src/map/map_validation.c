@@ -44,6 +44,25 @@ int	is_map_closed(char **map)
 	int	y;
 	int	x;
 
+	if (!map || !map[0])
+		return (0);
+	x = 0;
+	while (map[0][x])
+	{
+		if (map[0][x] == '0')
+			return (0);
+		x++;
+	}
+	y = 0;
+	while (map[y + 1])
+		y++;
+	x = 0;
+	while (map[y][x])
+	{
+		if (map[y][x] == '0')
+			return (0);
+		x++;
+	}
 	y = 1;
 	while (map[y + 1])
 	{
