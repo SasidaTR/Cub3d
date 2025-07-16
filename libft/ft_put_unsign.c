@@ -1,21 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   ft_put_unsign.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 15:58:39 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/16 17:44:54 by douzgane         ###   ########.fr       */
+/*   Created: 2025/01/06 17:46:01 by douzgane          #+#    #+#             */
+/*   Updated: 2025/03/08 21:43:37 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "ft_printf.h"
 
-int	print_error(char *msg)
+// int	ft_putchar(char a);
+// int	ft_put_int(long int nb);
+int	ft_put_unsign(unsigned int nb)
 {
-	write(2, "Error\n", 6);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	return (0);
+	int	count;
+
+	count = 0;
+	if (nb >= 10)
+	{
+		count += ft_put_int(nb / 10);
+		count += ft_put_int(nb % 10);
+	}
+	else
+		count += ft_put_char(nb + 48);
+	return (count);
 }

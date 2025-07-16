@@ -1,21 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   ft_put_str.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 15:58:39 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/16 17:44:54 by douzgane         ###   ########.fr       */
+/*   Created: 2025/01/06 17:46:01 by douzgane          #+#    #+#             */
+/*   Updated: 2025/03/08 21:43:37 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "ft_printf.h"
+// #include <unistd.h>
 
-int	print_error(char *msg)
+int	ft_put_str(char *str)
 {
-	write(2, "Error\n", 6);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	return (0);
+	int	len;
+
+	len = 0;
+	if (!str)
+		return (ft_put_str("(null)"));
+	while (*str)
+	{
+		len += write(1, str, 1);
+		str++;
+	}
+	return (len);
 }

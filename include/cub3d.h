@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/02 16:19:56 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/15 17:42:20 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:02:06 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,6 +126,7 @@ int			check_wall_collision(t_data *data, double new_x, double new_y);
 
 // map
 int			load_map(char *path, t_map *map);
+int			process_map_file(int fd, t_map *map, char ***lines, int *size);
 int			read_map_start(int fd, t_map *map, char ***lines, int *size);
 int			read_map_lines(int fd, char ***lines, int *size);
 int			assign_texture(char **dst, char *line, char *id);
@@ -165,10 +166,16 @@ void		select_tex(t_ray *r, t_data *d);
 // textures
 int			load_textures(t_data *data);
 
+// main
+int			main_loop(t_data *data);
+
 // utils
 void		free_array(char **array);
-int			print_error(char *msg);
 void		free_map_resources(t_map *map, void *mlx);
 void		free_all_resources(t_data *data);
+int			print_error(char *msg);
+int			validate_arguments(int argc, char **argv);
+int			initialize_mlx(t_data *data);
+void		setup_hooks(t_data *data);
 
 #endif
