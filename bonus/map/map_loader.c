@@ -19,6 +19,7 @@ static void	render_frame(t_data *d, void *img, char *addr)
 	x = 0;
 	while (x < WIDTH)
 		render_column(d, addr, x++);
+	draw_minimap(d, addr);
 	mlx_put_image_to_window(d->mlx, d->win, img, 0, 0);
 }
 
