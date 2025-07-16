@@ -6,11 +6,11 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:52 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/09 20:12:57 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/15 17:42:20 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#include "../../include/cub3d.h"
 
 int	is_empty_line(char *line)
 {
@@ -26,48 +26,16 @@ int	is_empty_line(char *line)
 	return (1);
 }
 
-static int	check_cell_boundaries(char **map, int y, int x, int line_len)
-{
-	char	c;
-
-	c = map[y][x];
-	if (c == '0' || ft_strchr("NSWE", c))
-	{
-		if (y == 0 || !map[y + 1] || x == 0 || x >= line_len)
-			return (0);
-		if (x >= (int)ft_strlen(map[y - 1]) || x >= (int)ft_strlen(map[y + 1]))
-			return (0);
-		if (map[y - 1][x] == ' ' || map[y + 1][x] == ' ' || map[y][x
-			- 1] == ' ' || map[y][x + 1] == ' ')
-			return (0);
-	}
-	return (1);
-}
-
 int	is_map_closed(char **map)
 {
-	int		y;
-	int		x;
-	int		line_len;
-	char	c;
-
-	y = 0;
-	while (map[y])
-	{
-		x = 0;
-		line_len = ft_strlen(map[y]);
-		if (line_len > 0 && map[y][line_len - 1] == '\n')
-			line_len--;
-		c = map[y][x];
-		while (c && c != '\n')
-		{
-			if (!check_cell_boundaries(map, y, x, line_len))
-				return (0);
-			x++;
-			c = map[y][x];
-		}
-		y++;
-	}
+	if (!map || !map[0])
+		return (0);
+	if (!check_first_line(map))
+		return (0);
+	if (!check_last_line(map))
+		return (0);
+	if (!check_middle_lines(map))
+		return (0);
 	return (1);
 }
 
