@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:58:46 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/02 16:56:00 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/16 19:02:06 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,32 +40,12 @@ void	init_map(t_map *map)
 	map->ceiling[2] = -1;
 }
 
-static void	setup_hooks(t_data *data)
-{
-	mlx_hook(data->win, 2, 1L << 0, key_press, data);
-	mlx_hook(data->win, 3, 1L << 1, key_release, data);
-	mlx_hook(data->win, 6, 1L << 6, mouse_move, data);
-	mlx_mouse_move(data->mlx, data->win, WIDTH / 2, HEIGHT / 2);
-	mlx_mouse_hide(data->mlx, data->win);
-	mlx_hook(data->win, 17, 0, close_window, data);
-	mlx_loop_hook(data->mlx, main_loop, data);
-}
-
-static int	initialize_mlx(t_data *data)
-{
-	data->mlx = mlx_init();
-	if (!data->mlx)
-		return (printf("Error\nFailed to initialize MLX\n"), 0);
-	return (1);
-}
-
 int	main(int argc, char **argv)
 {
 	t_data	data;
 
-	if (argc != 2 || !strrchr(argv[1], '.')
-		|| strcmp(strrchr(argv[1], '.'), ".cub"))
-		return (printf("Usage: ./cub3D <map.cub>\n"), 1);
+	if (!validate_arguments(argc, argv))
+		return (1);
 	ft_bzero(&data, sizeof(t_data));
 	init_map(&data.map);
 	if (!load_map(argv[1], &data.map))
@@ -75,11 +55,13 @@ int	main(int argc, char **argv)
 	if (!load_textures(&data))
 		return (free_map_resources(&data.map, data.mlx),
 			mlx_destroy_display(data.mlx), free(data.mlx),
-			printf("Error\nFailed to load textures\n"), 1);
+			ft_printf("Error: Texture loading failed\n"
+				"Check if all texture files (.xpm) exist and are valid\n"), 1);
 	data.win = mlx_new_window(data.mlx, WIDTH, HEIGHT, "Cub3D");
 	if (!data.win)
 		return (free_all_resources(&data),
-			printf("Error\nFailed to create window\n"), 1);
+			ft_printf("Error: Window creation failed\n"
+				"Insufficient memory or display resources\n"), 1);
 	setup_hooks(&data);
 	mlx_loop(data.mlx);
 	free_all_resources(&data);

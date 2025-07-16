@@ -1,21 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   print_error.c                                      :+:      :+:    :+:   */
+/*   ft_printf.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/06/18 15:58:39 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/16 17:44:54 by douzgane         ###   ########.fr       */
+/*   Created: 2025/07/16 00:00:00 by douzgane          #+#    #+#             */
+/*   Updated: 2025/07/16 17:47:41 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d_bonus.h"
+#ifndef FT_PRINTF_H
+# define FT_PRINTF_H
 
-int	print_error(char *msg)
-{
-	write(2, "Error\n", 6);
-	write(2, msg, ft_strlen(msg));
-	write(2, "\n", 1);
-	return (0);
-}
+# include <stdarg.h>
+# include <unistd.h>
+
+int	ft_printf(const char *format, ...);
+int	ft_put_char(int a);
+int	ft_put_str(char *str);
+int	ft_put_ptr(void *ptr);
+int	ft_put_int(long int nb);
+int	ft_put_unsign(unsigned int n);
+int	ft_put_hex(unsigned int n, char format);
+
+#endif
