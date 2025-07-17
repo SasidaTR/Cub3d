@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:25 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/16 19:02:06 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:09:46 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void	display_map(t_data *d)
 
 int	validate_and_parse_map(t_map *map, char **lines)
 {
+	int	parse_result;
+
 	if (!validate_required_elements(map))
 		return (print_error("missing texture or color definitions "
 				"(NO, SO, WE, EA, F, C)"), 0);
@@ -48,7 +50,11 @@ int	validate_and_parse_map(t_map *map, char **lines)
 				"(only 0,1,N,S,E,W allowed)"), 0);
 	if (!is_map_closed(lines))
 		return (print_error("map is not properly closed by walls (1)"), 0);
-	if (!parse_map_data(map, lines, 0))
+	parse_result = parse_map_data(map, lines, 0);
+	if (parse_result == -1)
+		return (print_error("map parsing failed - "
+				"multiple player spawn points found"), 0);
+	if (parse_result == 0)
 		return (print_error("map parsing failed - "
 				"no player spawn point found"), 0);
 	return (1);

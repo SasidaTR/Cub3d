@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:37 by douzgane          #+#    #+#             */
-/*   Updated: 2025/06/18 15:57:38 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:09:46 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	parse_map_data(t_map *map, char **lines, int i)
 		while (map->map[y][x])
 		{
 			if (!check_player_spawn(map, y, x, &found))
-				return (0);
+				return (-1);
 			x++;
 		}
 		y++;
