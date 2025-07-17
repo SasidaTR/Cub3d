@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/16 18:15:00 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/16 18:54:19 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 12:13:52 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static int	check_extension_validity(char *filename, char *dot_pos, char **argv)
 	if (!dot_pos)
 		return (ft_printf("Error: File has no extension\nUsage: %s "
 				"<map_file.cub>\nFile must have .cub extension\n", argv[0]), 0);
-	if (strcmp(dot_pos, ".cub") != 0)
+	if (ft_strcmp(dot_pos, ".cub") != 0)
 		return (ft_printf("Error: Invalid file extension '%s'\nUsage: %s "
 				"<map_file.cub>\nFile must have .cub extension\n",
 				dot_pos, argv[0]), 0);
@@ -38,7 +38,7 @@ static int	validate_filename_format(char *filename, char **argv)
 		return (ft_printf("Error: Empty filename\nUsage: %s "
 				"<map_file.cub>\nPlease provide a valid .cub file\n",
 				argv[0]), 0);
-	dot_pos = strrchr(filename, '.');
+	dot_pos = ft_strrchr(filename, '.');
 	return (check_extension_validity(filename, dot_pos, argv));
 }
 
