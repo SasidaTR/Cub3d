@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/15 17:55:00 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/15 17:50:18 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:16:08 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ int	check_first_line(char **map)
 	x = 0;
 	while (map[0][x])
 	{
-		if (map[0][x] == '0')
+		if (map[0][x] == '0' || ft_strchr("NSEW", map[0][x]))
 			return (0);
 		x++;
 	}
@@ -52,7 +52,7 @@ int	check_last_line(char **map)
 	x = 0;
 	while (map[y][x])
 	{
-		if (map[y][x] == '0')
+		if (map[y][x] == '0' || ft_strchr("NSEW", map[y][x]))
 			return (0);
 		x++;
 	}
@@ -70,7 +70,8 @@ int	check_middle_lines(char **map)
 		x = 0;
 		while (map[y][x])
 		{
-			if (map[y][x] == '0' && is_invalid_adjacent(map, y, x))
+			if ((map[y][x] == '0' || ft_strchr("NSEW", map[y][x]))
+				&& is_invalid_adjacent(map, y, x))
 				return (0);
 			x++;
 		}

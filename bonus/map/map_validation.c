@@ -6,11 +6,11 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:52 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/15 17:42:20 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:14:35 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../include/cub3d.h"
+#include "../../include/cub3d_bonus.h"
 
 int	is_empty_line(char *line)
 {
