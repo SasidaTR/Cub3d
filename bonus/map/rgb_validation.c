@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/17 10:45:00 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/17 11:14:32 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:50:25 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ int	parse_color(int color[3], char *line)
 {
 	char	**rgb;
 	char	*trimmed[3];
+	int		i;
 
 	if (!is_strict_rgb_format(line))
 		return (0);
@@ -69,6 +70,9 @@ int	parse_color(int color[3], char *line)
 		return (free_array(rgb), 0);
 	if (!set_color_values(color, trimmed))
 	{
+		i = 0;
+		while (i < 3)
+			free(trimmed[i++]);
 		free_array(rgb);
 		return (0);
 	}
