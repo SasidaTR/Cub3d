@@ -6,11 +6,23 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:45 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/15 17:51:20 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:54:56 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../include/cub3d_bonus.h"
+
+static void	cleanup_remaining_lines(int fd)
+{
+	char	*line;
+
+	line = get_next_line(fd);
+	while (line)
+	{
+		free(line);
+		line = get_next_line(fd);
+	}
+}
 
 int	read_map_lines(int fd, char ***lines, int *size)
 {
@@ -25,7 +37,9 @@ int	read_map_lines(int fd, char ***lines, int *size)
 		if (!tmp)
 		{
 			free_array(*lines);
-			return (free(line), 0);
+			free(line);
+			cleanup_remaining_lines(fd);
+			return (0);
 		}
 		*lines = tmp;
 		(*lines)[(*size)++] = line;

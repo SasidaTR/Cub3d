@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:17 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/15 17:50:04 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:36:30 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,24 +60,5 @@ int	is_valid_number(char *str)
 			return (0);
 		i++;
 	}
-	return (1);
-}
-
-int	parse_color(int color[3], char *line)
-{
-	char	**rgb;
-	char	*trimmed[3];
-
-	rgb = ft_split(line, ',');
-	if (!rgb || !rgb[0] || !rgb[1] || !rgb[2] || rgb[3])
-		return (free_array(rgb), 0);
-	if (!validate_rgb_components(rgb, trimmed))
-		return (free_array(rgb), 0);
-	if (!set_color_values(color, trimmed))
-	{
-		free_array(rgb);
-		return (0);
-	}
-	free_array(rgb);
 	return (1);
 }

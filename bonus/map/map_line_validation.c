@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/07/09 16:10:00 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/15 17:50:35 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:56:10 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,10 @@ int	is_invalid_line_or_duplicate(char *line, t_map *map)
 		|| (ft_strncmp(line, "SO", 2) == 0 && map->south)
 		|| (ft_strncmp(line, "EA", 2) == 0 && map->east)
 		|| (ft_strncmp(line, "WE", 2) == 0 && map->west)
-		|| (ft_strncmp(line, "F", 1) == 0 && map->floor[0] != -1)
-		|| (ft_strncmp(line, "C", 1) == 0 && map->ceiling[0] != -1))
+		|| (ft_strncmp(line, "F", 1) == 0 && (map->floor[0] != -1
+				|| map->floor[1] != -1 || map->floor[2] != -1))
+		|| (ft_strncmp(line, "C", 1) == 0 && (map->ceiling[0] != -1
+				|| map->ceiling[1] != -1 || map->ceiling[2] != -1)))
 		return (1);
 	return (0);
 }

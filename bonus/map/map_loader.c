@@ -6,7 +6,7 @@
 /*   By: douzgane <douzgane@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/18 15:57:25 by douzgane          #+#    #+#             */
-/*   Updated: 2025/07/17 11:15:51 by douzgane         ###   ########.fr       */
+/*   Updated: 2025/07/17 11:26:26 by douzgane         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@ static void	render_frame(t_data *d, void *img, char *addr)
 	x = 0;
 	while (x < WIDTH)
 		render_column(d, addr, x++);
+	draw_minimap(d, addr);
 	mlx_put_image_to_window(d->mlx, d->win, img, 0, 0);
 }
 
